@@ -19,43 +19,37 @@ Coderr is a Django-based platform designed to offer and manage various services.
 
 ## Setup Guide
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Hellsticks96/coderr.git
-   cd coderr
-   ```
-
-Setup Guide
-
-Clone the repository
+### Clone the repository
 
 git clone https://github.com/Hellsticks96/coderr.git
 cd coderr
 
-Create and activate a virtual environment
+### Create and activate a virtual environment
 
 python -m venv venv
 source venv/bin/activate # on macOS/Linux
 venv\Scripts\activate # on Windows
 
-Install dependencies
+### Install dependencies
 
 pip install -r requirements.txt
 
-Apply migrations
+### Apply migrations
 
 python manage.py migrate
 
-Run the development server
+### Run the development server
 
 python manage.py runserver
 
-Access the application
+### Access the application
+
 Open your browser and go to:
 
 http://127.0.0.1:8000/
 
-Project Structure
+### Project Structure
+
 coderr/
 │
 ├── core/ # Core project settings and URLs
@@ -67,11 +61,9 @@ coderr/
 ├── requirements.txt # Project dependencies
 └── manage.py # Django management script
 
-Development
+### Development
 
 To run tests or make changes:
-
-# Run tests
 
 python manage.py test
 
@@ -79,7 +71,7 @@ python manage.py test
 
 python manage.py createsuperuser
 
-License
+### License
 
 This project is open source and available under the MIT License
 .
