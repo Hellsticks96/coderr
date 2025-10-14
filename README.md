@@ -59,7 +59,20 @@ http://127.0.0.1:8000/
 
 ### Project Structure
 
-<pre> ## Project Structure ``` coderr/ │ ├── core/ # Core project settings and URLs ├── offers/ # Handles service offerings ├── orders/ # Manages service orders ├── profiles/ # User and provider profiles ├── reviews/ # Service review system ├── user_auth_app/ # Authentication and user management ├── requirements.txt # Project dependencies └── manage.py # Django management script ``` </pre>
+Project Structure
+
+```
+coderr/
+│
+├── core/ # Core project settings and URLs
+├── offers/ # Handles service offerings
+├── orders/ # Manages service orders
+├── profiles/ # User and provider profiles
+├── reviews/ # Service review system
+├── user_auth_app/ # Authentication and user management
+├── requirements.txt # Project dependencies
+└── manage.py # Django management script
+```
 
 ### Development
 
