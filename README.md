@@ -21,8 +21,10 @@ Coderr is a Django-based platform designed to offer and manage various services.
 
 ### Clone the repository
 
+```bash
 git clone https://github.com/Hellsticks96/coderr.git
 cd coderr
+```
 
 ### Create and activate a virtual environment
 
