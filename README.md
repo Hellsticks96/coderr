@@ -28,21 +28,29 @@ cd coderr
 
 ### Create and activate a virtual environment
 
+```cmd
 python -m venv venv
 source venv/bin/activate # on macOS/Linux
 venv\Scripts\activate # on Windows
+```
 
 ### Install dependencies
 
+```cmd
 pip install -r requirements.txt
+```
 
 ### Apply migrations
 
+```cmd
 python manage.py migrate
+```
 
 ### Run the development server
 
+```cmd
 python manage.py runserver
+```
 
 ### Access the application
 
@@ -67,11 +75,15 @@ coderr/
 
 To run tests or make changes:
 
+```cmd
 python manage.py test
+```
 
 # Create a superuser for admin access
 
+```cmd
 python manage.py createsuperuser
+```
 
 ### License
 
