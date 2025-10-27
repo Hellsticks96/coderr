@@ -3,7 +3,7 @@ from orders.models import Order
 from .serializers import OrderSerializer, OrderCreateSerializer, OrderDetailSerializer
 from .permissions import IsCustomerUser, IsBusinessUser, IsAdminUser
 
-
+#View for get (list) and post of orders.
 class OrderListCreateView(generics.ListCreateAPIView):
     queryset = Order.objects.all().select_related('customer_user', 'business_user', 'detail')
 
@@ -29,7 +29,7 @@ class OrderListCreateView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save()
 
-
+#View for single order details.
 class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all().select_related('customer_user', 'business_user', 'detail')
     serializer_class = OrderDetailSerializer

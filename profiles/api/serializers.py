@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from user_auth_app.models import UserProfile
 
+#Serializer for profile views. Get list of all users, get all customer users, get all business users or patch user.
 class UserProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source="user.username", read_only=True)
     first_name = serializers.CharField(source="user.first_name", required=False)

@@ -3,12 +3,15 @@ from offers.models import Package, Detail
 from .serializers import PackageSerializer, PackageCreateSerializer, DetailSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
+from .permissions import IsOwner
 
+#set pagination
 class OfferPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 50
 
+#Get and post new offer-set
 class OfferListCreateView(generics.GenericAPIView):
     queryset = Package.objects.all().order_by('id')
     pagination_class = OfferPagination
@@ -45,10 +48,7 @@ class OfferListCreateView(generics.GenericAPIView):
         full_serializer = PackageSerializer(serializer.instance, context={'request': request})
         return Response(full_serializer.data, status=status.HTTP_201_CREATED)
 
-class IsOwner(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        return obj.user == request.user
-
+#For detail endpoint. Update or delete an offer-package.
 class OfferRetrieveUpdateDeleteView(generics.GenericAPIView):
     queryset = Package.objects.all()
     serializer_class = PackageSerializer
@@ -76,7 +76,8 @@ class OfferRetrieveUpdateDeleteView(generics.GenericAPIView):
         self.check_object_permissions(request, obj)
         obj.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
+#Get detail list of a specific offer.   
 class OfferDetailRetrieveView(generics.RetrieveAPIView):
     queryset = Detail.objects.all()
     serializer_class = DetailSerializer

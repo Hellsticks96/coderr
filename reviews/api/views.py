@@ -4,7 +4,7 @@ from .serializers import ReviewSerializer
 from orders.api.permissions import IsCustomerUser
 from .permissions import IsReviewer
 
-
+#Get all reviews or post a single new review.
 class ReviewListCreateView(generics.ListCreateAPIView):
     serializer_class = ReviewSerializer
 
@@ -19,7 +19,8 @@ class ReviewListCreateView(generics.ListCreateAPIView):
         if business_user_id:
             queryset = queryset.filter(business_user_id=business_user_id)
         return queryset
-    
+
+#Get details of a single review.    
 class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer

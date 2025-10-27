@@ -2,7 +2,7 @@ from rest_framework import serializers
 from orders.models import Order
 from offers.models import Detail
 
-
+#Serializer for single order. Get only!
 class OrderSerializer(serializers.ModelSerializer):
     customer_user = serializers.PrimaryKeyRelatedField(read_only=True)
     business_user = serializers.PrimaryKeyRelatedField(read_only=True)
@@ -24,7 +24,7 @@ class OrderSerializer(serializers.ModelSerializer):
             'updated_at',
         ]
 
-
+#Serializer for single order. Post only!
 class OrderCreateSerializer(serializers.ModelSerializer):
     offer_detail_id = serializers.IntegerField(write_only=True)
 
@@ -56,7 +56,8 @@ class OrderCreateSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return OrderSerializer(instance, context=self.context).data
-    
+
+#Serializer for order details.    
 class OrderDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order

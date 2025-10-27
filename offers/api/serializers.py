@@ -1,11 +1,15 @@
 from rest_framework import serializers
 from offers.models import Package, Detail
 
+#Serializer of a single detail from an Offer-Package.
+#Is just sorting the properties.
 class DetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Detail
         fields = ['id', 'title', 'revisions', 'delivery_time_in_days', 'price', 'features', 'offer_type']
 
+#Serializer for Offer-Packages.
+#Checks whether or not min_price and min_delivery_time are existing and if yes gets their value.
 class PackageSerializer(serializers.ModelSerializer):
     details = DetailSerializer(many=True, read_only=True)
     min_price = serializers.SerializerMethodField()
@@ -25,6 +29,7 @@ class PackageSerializer(serializers.ModelSerializer):
             return min([d.delivery_time_in_days for d in obj.details.all()])
         return None
 
+#Serializer for posting a new Offer-Package.
 class PackageCreateSerializer(serializers.ModelSerializer):
     details = DetailSerializer(many=True)
 
@@ -39,7 +44,7 @@ class PackageCreateSerializer(serializers.ModelSerializer):
             Detail.objects.create(package=package, **detail)
         return package
 
-
+#Serializer for creating a offer-detail.
 class DetailCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Detail

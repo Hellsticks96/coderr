@@ -7,6 +7,9 @@ from user_auth_app.models import UserProfile
 from offers.models import Package
 
 
+#This view is for the stats endpoint of the API:
+#Gets the data e.g. ALL ratings, calulates the average and displays it.
+#GET-Only!
 class StatsView(APIView):
     permission_classes = [permissions.AllowAny]
 
