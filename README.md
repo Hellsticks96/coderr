@@ -74,20 +74,6 @@ coderr/
 └── manage.py # Django management script
 ```
 
-### Development
-
-To run tests or make changes:
-
-```cmd
-python manage.py test
-```
-
-# Create a superuser for admin access
-
-```cmd
-python manage.py createsuperuser
-```
-
 ### License
 
 This project is open source and available under the MIT License
