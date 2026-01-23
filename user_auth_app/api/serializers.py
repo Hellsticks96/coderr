@@ -1,5 +1,6 @@
 import uuid
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 from user_auth_app.models import UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -11,58 +12,66 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ['username', 'email', 'password', 'repeated_password', 'type']
 
 class RegistrationSerializer(serializers.ModelSerializer):
-    repeated_password = serializers.CharField(write_only=True)
-    type = serializers.ChoiceField(choices=UserProfile.USER_TYPE_CHOICES, write_only=True)
+    email = serializers.EmailField(
+        required=True,
+        allow_blank=False,
+        allow_null=False,
+        validators=[UniqueValidator(queryset=User.objects.all(), message="Email already registered")]
+    )
+    username = serializers.CharField(
+        required=True,
+        allow_blank=False,
+        validators=[UniqueValidator(queryset=User.objects.all(), message="Username already taken")]
+    )
+    password = serializers.CharField(write_only=True, required=True, allow_blank=False)
+    repeated_password = serializers.CharField(write_only=True, required=True, allow_blank=False)
+    type = serializers.ChoiceField(choices=UserProfile.USER_TYPE_CHOICES, write_only=True, required=True)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'repeated_password', 'type']
-        extra_kwargs = {
-            'password': {'write_only': True}
-        }
+        fields = ["username", "email", "password", "repeated_password", "type"]
 
-    def save(self, **kwargs):
-        pw = self.validated_data['password']
-        rep_pw = self.validated_data['repeated_password']
+    def validate(self, attrs):
+        if attrs["password"] != attrs["repeated_password"]:
+            raise serializers.ValidationError({"repeated_password": "Passwords don't match"})
+        return attrs
 
-        if pw != rep_pw:
-            raise serializers.ValidationError({'error': "Passwords don't match"})
-        
-        if User.objects.filter(email=self.validated_data['email']).exists():
-            raise serializers.ValidationError({'error': 'Email already registered'})
-        
-        username = self.validated_data.get('username')
-        account = User(username=username, email=self.validated_data['email'])
-        account.set_password(pw)
-        account.save()
-
-        UserProfile.objects.create(
-            user=account,
-            type=self.validated_data['type']
-        )
-
-        return account
+    def create(self, validated_data):
+        user_type = validated_data.pop("type")
+        validated_data.pop("repeated_password", None)
+        user = User(username=validated_data["username"], email=validated_data["email"])
+        user.set_password(validated_data["password"])
+        user.save()
+        UserProfile.objects.create(user=user, type=user_type)
+        return user
 
 class CustomAuthTokenSerializer(serializers.Serializer):
-    email = serializers.EmailField()
+    username = serializers.CharField(required=False, allow_blank=True)
+    email = serializers.EmailField(required=False, allow_blank=True)
     password = serializers.CharField()
 
     def validate(self, attrs):
+        username = attrs.get('username')
         email = attrs.get('email')
         password = attrs.get('password')
-    
-        if email and password:
+
+        if not password:
+            raise serializers.ValidationError({"detail": ["Password required."]})
+
+        if not username and not email:
+            raise serializers.ValidationError({"detail": ["Must include either 'username' or 'email'."]})
+        
+        if email:
             try:
                 user_obj = User.objects.get(email=email)
+                username = user_obj.username
             except User.DoesNotExist:
                 raise serializers.ValidationError({"detail": ["Invalid email or password."]})
-    
-            user = authenticate(username=user_obj.username, password=password)
-    
-            if not user:
-                raise serializers.ValidationError({"detail": ["Invalid email or password."]})
-        else:
-            raise serializers.ValidationError({"detail": ["Must include 'email' and 'password'."]})
-    
+
+        user = authenticate(username=username, password=password)
+
+        if not user:
+            raise serializers.ValidationError({"detail": ["Invalid credentials."]})
+
         attrs['user'] = user
         return attrs

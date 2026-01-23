@@ -4,6 +4,10 @@ from .serializers import PackageSerializer, PackageCreateSerializer, DetailSeria
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from .permissions import IsOwner
+from django.db.models import Min
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet, NumberFilter
+from rest_framework import filters
+
 
 #set pagination
 class OfferPagination(PageNumberPagination):
@@ -11,10 +15,26 @@ class OfferPagination(PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 50
 
+#Query filter class.
+class OfferFilter(FilterSet):
+    creator_id = NumberFilter(field_name='user_id', lookup_expr='exact')
+    min_price = NumberFilter(field_name='details__price', lookup_expr='gte')
+    max_delivery_time = NumberFilter(field_name='details__delivery_time_in_days', lookup_expr='lte')
+
+    class Meta:
+        model = Package
+        fields = ['creator_id', 'min_price', 'max_delivery_time']
+
 #Get and post new offer-set
 class OfferListCreateView(generics.GenericAPIView):
     queryset = Package.objects.all().order_by('id')
     pagination_class = OfferPagination
+
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_class = OfferFilter
+    search_fields = ['title', 'description']
+    ordering_fields = ['updated_at', 'min_price']
+    ordering = ['-updated_at']
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -25,9 +45,20 @@ class OfferListCreateView(generics.GenericAPIView):
         if self.request.method == 'POST':
             return [permissions.IsAuthenticated()]
         return []
+    
+    def get_queryset(self):
+        return (
+            Package.objects.all()
+            .annotate(
+                min_price=Min('details__price'),
+                min_delivery_time=Min('details__delivery_time_in_days'),
+            )
+            .order_by('id')
+        )
+
 
     def get(self, request):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         serializer = self.get_serializer(page, many=True, context={'request': request})
         return self.get_paginated_response(serializer.data)
@@ -82,3 +113,4 @@ class OfferDetailRetrieveView(generics.RetrieveAPIView):
     queryset = Detail.objects.all()
     serializer_class = DetailSerializer
     permission_classes = [permissions.IsAuthenticated]
+

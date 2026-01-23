@@ -2,3 +2,7 @@ db.sqlite3
 env/
 **/migrations/
 **/__pycache__/
+testing/
+postman.zip
+testing.zip
+offers.zip
