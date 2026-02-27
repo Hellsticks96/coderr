@@ -8,10 +8,20 @@ class DetailSerializer(serializers.ModelSerializer):
         model = Detail
         fields = ['id', 'title', 'revisions', 'delivery_time_in_days', 'price', 'features', 'offer_type']
 
+#For creating url to offer detail
+class DetailLinkSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name='offers-detail'
+    )
+
+    class Meta:
+        model = Detail
+        fields = ['id', 'url']
+
 #Serializer for Offer-Packages.
 #Checks whether or not min_price and min_delivery_time are existing and if yes gets their value.
 class PackageSerializer(serializers.ModelSerializer):
-    details = DetailSerializer(many=True, read_only=True)
+    details = DetailLinkSerializer(many=True, read_only=True)
     min_price = serializers.SerializerMethodField()
     min_delivery_time = serializers.SerializerMethodField()
 
@@ -49,3 +59,5 @@ class DetailCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Detail
         fields = ['package', 'title', 'revisions', 'delivery_time_in_days', 'price', 'features', 'offer_type']
+
+

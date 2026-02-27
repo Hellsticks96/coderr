@@ -4,5 +4,5 @@ from .views import OfferListCreateView, OfferRetrieveUpdateDeleteView, OfferDeta
 urlpatterns = [
     path('offers/', OfferListCreateView.as_view(), name='offers-list'),
     path('offers/<int:pk>/', OfferRetrieveUpdateDeleteView.as_view(), name='offers-detail'),
-    path('offers/offerdetail/<int:pk>/', OfferDetailRetrieveView.as_view(), name='offers-detail'),
+    path('offerdetail/<int:pk>/', OfferDetailRetrieveView.as_view(), name='offers-detail'),
 ]
