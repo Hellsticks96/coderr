@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions, status
 from offers.models import Package, Detail
-from .serializers import PackageSerializer, PackageCreateSerializer, DetailSerializer
+from .serializers import PackageSerializer, PackageCreateSerializer, DetailSerializer, PackageCreateResponseSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from .permissions import IsOwner
@@ -76,7 +76,7 @@ class OfferListCreateView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save(user=request.user)
 
-        full_serializer = PackageSerializer(serializer.instance, context={'request': request})
+        full_serializer = PackageCreateResponseSerializer(serializer.instance)
         return Response(full_serializer.data, status=status.HTTP_201_CREATED)
 
 #For detail endpoint. Update or delete an offer-package.

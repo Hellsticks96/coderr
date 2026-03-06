@@ -39,7 +39,7 @@ class PackageSerializer(serializers.ModelSerializer):
             return min([d.delivery_time_in_days for d in obj.details.all()])
         return None
 
-#Serializer for posting a new Offer-Package.
+#Serializer for validating the request body when posting a new Offer-Package.
 class PackageCreateSerializer(serializers.ModelSerializer):
     details = DetailSerializer(many=True)
 
@@ -53,6 +53,21 @@ class PackageCreateSerializer(serializers.ModelSerializer):
         for detail in details_data:
             Detail.objects.create(package=package, **detail)
         return package
+    
+#Serializer for creating the response body when posting a new Offer-Package.
+
+class PackageCreateResponseSerializer(serializers.ModelSerializer):
+    details= DetailSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Package
+        fields= [
+            'id',
+            'title',
+            'image',
+            'description',
+            'details'
+        ]
 
 #Serializer for creating a offer-detail.
 class DetailCreateSerializer(serializers.ModelSerializer):
