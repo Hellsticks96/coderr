@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, serializers
 from reviews.models import Review
 from .serializers import ReviewSerializer
 from orders.api.permissions import IsCustomerUser
@@ -28,6 +28,13 @@ class ReviewListCreateView(generics.ListCreateAPIView):
             queryset = queryset.filter(reviewer_id=reviewer_id)
 
         return queryset
+    
+    def perform_create(self, serializer):
+        business_user_id = self.request.data.get("business_user")
+        if not business_user_id:
+            raise serializers.ValidationError({
+                "business_user": "This field is required."
+            })
 
 #Get details of a single review.    
 class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):

@@ -50,9 +50,9 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
 class CompletedOrderCountView(APIView):
     permission_classes= [permissions.IsAuthenticated]
 
-    def get(self, request, business_user_id):
+    def get(self, request, pk):
         User = get_user_model()
-        business_user = get_object_or_404(User, id=business_user_id)
+        business_user = get_object_or_404(User, id=pk)
         completed_count = Order.objects.filter(
             business_user = business_user,
             status='completed'
@@ -66,9 +66,9 @@ class CompletedOrderCountView(APIView):
 class TotalOrderView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, business_user_id):
+    def get(self, request, pk):
         User = get_user_model()
-        business_user = get_object_or_404(User, id=business_user_id)
+        business_user = get_object_or_404(User, id=pk)
         total_count = Order.objects.filter(business_user=business_user).count()
-        serializer = OrderTotalCountSerializer({'order-count': total_count})
+        serializer = OrderTotalCountSerializer({'order_count': total_count})
         return Response(serializer.data)
