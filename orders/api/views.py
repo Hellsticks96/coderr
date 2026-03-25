@@ -68,7 +68,7 @@ class OrderInProgressView(APIView):
 
     def get(self, request, pk):
         User = get_user_model()
-        business_user = get_object_or_404(User, id=pk, status='in_progress')
-        total_count = Order.objects.filter(business_user=business_user).count()
+        business_user = get_object_or_404(User, id=pk)
+        total_count = Order.objects.filter(business_user=business_user, status='in_progress').count()
         serializer = OrderTotalCountSerializer({'order_count': total_count})
         return Response(serializer.data)
