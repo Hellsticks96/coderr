@@ -8,9 +8,6 @@ from rest_framework.filters import OrderingFilter
 #Get all reviews or post a single new review.
 class ReviewListCreateView(generics.ListCreateAPIView):
     serializer_class = ReviewSerializer
-    filter_backends = [OrderingFilter]
-    ordering_fields = ["updated_at", "rating"]
-    ordering = ["-updated_at"]
 
     def get_permissions(self):
         if self.request.method == "POST":
@@ -35,6 +32,10 @@ class ReviewListCreateView(generics.ListCreateAPIView):
             raise serializers.ValidationError({
                 "business_user": "This field is required."
             })
+        serializer.save(
+            reviewer=self.request.user,
+            business_user_id=business_user_id
+        )
 
 #Get details of a single review.    
 class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):
