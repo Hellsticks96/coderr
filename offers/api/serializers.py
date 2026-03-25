@@ -56,14 +56,36 @@ class PackageCreateSerializer(serializers.ModelSerializer):
     
     def update(self, instance, validated_data):
         details_data = validated_data.pop('details', None)
+
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
-            instance.save()
+        instance.save()
+
         if details_data is not None:
             instance.details.all().delete()
-        for detail in details_data:
-            Detail.objects.create(package=instance, **detail)
+            for detail in details_data:
+                Detail.objects.create(package=instance, **detail)
         return instance
+        
+    def validate(self, data):
+        details = data.get('details')
+
+        if details is not None:
+            for detail in details:
+                required_fields = [
+                    'title',
+                    'revisions',
+                    'delivery_time_in_days',
+                    'price',
+                    'features',
+                    'offer_type'
+                ]
+                for field in required_fields:
+                    if field not in detail:
+                        raise serializers.ValidationError({
+                            'details': f"Field '{field}' is required for each detail."
+                        })
+        return data
     
 #Serializer for creating the response body when posting a new Offer-Package.
 
