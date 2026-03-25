@@ -63,12 +63,12 @@ class CompletedOrderCountView(APIView):
     
 #View for total order count.
 
-class TotalOrderView(APIView):
+class OrderInProgressView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, pk):
         User = get_user_model()
-        business_user = get_object_or_404(User, id=pk)
+        business_user = get_object_or_404(User, id=pk, status='in_progress')
         total_count = Order.objects.filter(business_user=business_user).count()
         serializer = OrderTotalCountSerializer({'order_count': total_count})
         return Response(serializer.data)
