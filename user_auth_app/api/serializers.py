@@ -42,7 +42,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         user = User(username=validated_data["username"], email=validated_data["email"])
         user.set_password(validated_data["password"])
         user.save()
-        UserProfile.objects.create(user=user, type=user_type)
+        UserProfile.objects.get_or_create(user=user, defaults={'type': user_type})
         return user
 
 class CustomAuthTokenSerializer(serializers.Serializer):

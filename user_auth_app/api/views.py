@@ -25,7 +25,6 @@ class RegistrationView(APIView):
         serializer = RegistrationSerializer(data=request.data)
         if serializer.is_valid():
             saved_account = serializer.save()
-            profile = UserProfile.objects.get(user=saved_account)
             token, _ = Token.objects.get_or_create(user=saved_account)
 
             data = {
