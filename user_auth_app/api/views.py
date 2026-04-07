@@ -1,5 +1,5 @@
 from rest_framework import generics, permissions
-from user_auth_app.models import UserProfile
+from user_auth_app.models import User
 from .serializers import RegistrationSerializer, UserProfileSerializer, CustomAuthTokenSerializer
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
@@ -10,11 +10,11 @@ from rest_framework import status
 from profiles.api.permissions import IsOwner
 
 class UserProfileList(generics.ListCreateAPIView):
-    queryset = UserProfile.objects.all()
+    queryset = User.objects.all()
     serializer_class = UserProfileSerializer
 
 class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = UserProfile.objects.all()
+    queryset = User.objects.all()
     serializer_class = UserProfileSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwner]
 

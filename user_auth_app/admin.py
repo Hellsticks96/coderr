@@ -1,23 +1,14 @@
 from django.contrib import admin
-from django.contrib.auth.models import User
-from user_auth_app.models import UserProfile
-
-class UserProfileInline(admin.StackedInline):
-    model = UserProfile
-    can_delete = False
-    verbose_name_plural = 'profile'
-
-class CustomUserAdmin(admin.ModelAdmin):
-    inlines = (UserProfileInline,)
-    list_display = ('username', 'email', 'is_staff', 'is_active')
-    search_fields = ('username', 'email')
-
 from django.contrib.auth.admin import UserAdmin
-admin.site.unregister(User)
-admin.site.register(User, CustomUserAdmin)
+from .models import User
 
-@admin.register(UserProfile)
-class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'type', 'created_at')
-    search_fields = ('user__username', 'user__email', 'type')
-    list_filter = ('type',)
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    fieldsets = UserAdmin.fieldsets + (
+        ('Additional Info', {
+            'fields': ('file', 'location', 'tel', 'description', 'working_hours', 'type')            
+        }),
+    )
+    list_display = ('username', 'email', 'type', 'is_staff', 'is_active')
+    list_filter = ('type', 'is_staff')
+    search_fields = ('username', 'email')

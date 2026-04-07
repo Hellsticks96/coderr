@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import permissions
 from django.db.models import Avg, Count
 from reviews.models import Review
-from user_auth_app.models import UserProfile
+from user_auth_app.models import User
 from offers.models import Package
 
 
@@ -18,7 +18,7 @@ class StatsView(APIView):
             average_rating=Avg('rating'),
             review_count=Count('id')
         )
-        business_profile_count = UserProfile.objects.filter(type='business').count()
+        business_profile_count = User.objects.filter(type='business').count()
         offer_count = Package.objects.count()
 
         data = {

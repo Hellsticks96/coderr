@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
+from user_auth_app.models import User
 
 
 class Order(models.Model):

@@ -1,14 +1,13 @@
 import uuid
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from user_auth_app.models import UserProfile
-from django.contrib.auth.models import User
+from user_auth_app.models import User
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserProfile
+        model = User
         fields = ['username', 'email', 'password', 'repeated_password', 'type']
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -25,7 +24,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
     )
     password = serializers.CharField(write_only=True, required=True, allow_blank=False)
     repeated_password = serializers.CharField(write_only=True, required=True, allow_blank=False)
-    type = serializers.ChoiceField(choices=UserProfile.USER_TYPE_CHOICES, write_only=True, required=True)
+    type = serializers.ChoiceField(choices=User.USER_TYPE_CHOICES, write_only=True, required=True)
 
     class Meta:
         model = User
@@ -37,12 +36,10 @@ class RegistrationSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        user_type = validated_data.pop("type")
         validated_data.pop("repeated_password", None)
-        user = User(username=validated_data["username"], email=validated_data["email"])
+        user = User(username=validated_data["username"], email=validated_data["email"], type=validated_data["type"])
         user.set_password(validated_data["password"])
         user.save()
-        UserProfile.objects.get_or_create(user=user, defaults={'type': user_type})
         return user
 
 class CustomAuthTokenSerializer(serializers.Serializer):
