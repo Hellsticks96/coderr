@@ -18,11 +18,10 @@ class OrderListCreateView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        if hasattr(user, "profile"):
-            if user.profile.type == "customer":
-                return self.queryset.filter(customer_user=user)
-            elif user.profile.type == "business":
-                return self.queryset.filter(business_user=user)
+        if user.type == "customer":
+            return self.queryset.filter(customer_user=user)
+        elif user.type == "business":
+            return self.queryset.filter(business_user=user)
         return Order.objects.none()
 
     def get_permissions(self):

@@ -9,8 +9,7 @@ class IsCustomerUser(permissions.BasePermission):
         return bool(
             user
             and user.is_authenticated
-            and hasattr(user, "profile")
-            and user.profile.type == "customer"
+            and user.type == "customer"
         )
 
 
@@ -22,8 +21,7 @@ class IsBusinessUser(permissions.BasePermission):
         return bool(
             user
             and user.is_authenticated
-            and hasattr(user, "profile")
-            and user.profile.type == "business"
+            and user.type == "business"
         )
 
 

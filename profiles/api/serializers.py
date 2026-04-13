@@ -3,11 +3,12 @@ from user_auth_app.models import User
 
 #Serializer for profile views. Get list of all users, get all customer users, get all business users or patch user.
 class UserProfileSerializer(serializers.ModelSerializer):
+    user = serializers.IntegerField(source="id", read_only=True)
 
     class Meta:
         model = User
         fields = [
-            "id",
+            "user",
             "username",
             "first_name",
             "last_name",

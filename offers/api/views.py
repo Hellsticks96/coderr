@@ -65,7 +65,7 @@ class OfferListCreateView(generics.GenericAPIView):
 
     def post(self, request):
         try:
-            profile = request.user.profile
+            profile = request.user
         except Exception:
             return Response({"detail": "User profile not found."}, status=status.HTTP_403_FORBIDDEN)
 
