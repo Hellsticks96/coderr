@@ -16,21 +16,19 @@ class ReviewSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
-        read_only_fields = ["business_user", "reviewer", "created_at", "updated_at"]
+        read_only_fields = ["reviewer", "created_at", "updated_at"]
 
-        def validate(self, data):
-            details = data.get('details')
-    
-            if details is not None:
-                for detail in details:
-                    required_fields = [
-                        "business_user",
-                        "rating",
-                        "description"
-                    ]
-                    for field in required_fields:
-                        if field not in detail:
-                            raise serializers.ValidationError({
-                                'details': f"Field '{field}' is required for each detail."
-                            })
-            return data
+    def validate(self, data):
+        request = self.context['request']
+        reviewer = request.user
+        business_user = data.get('business_user')
+
+        if Review.objects.filter(
+            reviewer=reviewer,
+            business_user=business_user
+        ).exists():
+            raise serializers.ValidationError(
+                "You have already reviewed this business."
+            )
+
+        return data

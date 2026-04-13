@@ -20,5 +20,13 @@ class Review(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields= ['reviewer', 'business_user'],
+                name='unique_review_per_user_business'
+            )
+        ]
+
     def __str__(self):
         return f"Review {self.id} by {self.reviewer_id} for {self.business_user_id} ({self.rating}★)"
