@@ -19,6 +19,9 @@ class ReviewSerializer(serializers.ModelSerializer):
         read_only_fields = ["reviewer", "created_at", "updated_at"]
 
     def validate(self, data):
+        """
+        Prevents duplicate reviews from the same reviewer for the same business user.
+        """
         request = self.context['request']
         reviewer = request.user
         business_user = data.get('business_user')

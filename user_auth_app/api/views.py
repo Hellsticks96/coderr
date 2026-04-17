@@ -22,6 +22,13 @@ class RegistrationView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
+        """
+        Registers a new user account.
+
+        Creates a User instance via serializer validation,
+        generates an auth token, and returns authentication
+        details required for immediate login.
+        """
         serializer = RegistrationSerializer(data=request.data)
         if serializer.is_valid():
             saved_account = serializer.save()
@@ -39,6 +46,12 @@ class RegistrationView(APIView):
 
 class CustomLoginView(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
+        """
+        Authenticates a user using DRF token authentication.
+        
+        Validates credentials and returns an auth token along
+        with basic user information.
+        """
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})
         serializer.is_valid(raise_exception=True)

@@ -7,6 +7,17 @@ from rest_framework.filters import OrderingFilter
 
 #Get all reviews or post a single new review.
 class ReviewListCreateView(generics.ListCreateAPIView):
+    """
+    List reviews or create a new review.
+
+    Supports filtering by:
+    - business_user_id
+    - reviewer_id
+
+    On creation:
+    - reviewer is automatically set from authenticated user
+    - business_user is taken from request body
+    """
     serializer_class = ReviewSerializer
 
     def get_permissions(self):
@@ -27,6 +38,11 @@ class ReviewListCreateView(generics.ListCreateAPIView):
         return queryset
     
     def perform_create(self, serializer):
+        """
+        Creates a review and assigns:
+        - reviewer from request.user
+        - business_user from request data
+        """
         business_user_id = self.request.data.get("business_user")
         if not business_user_id:
             raise serializers.ValidationError({
@@ -39,6 +55,11 @@ class ReviewListCreateView(generics.ListCreateAPIView):
 
 #Get details of a single review.    
 class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve, update, or delete a review.
+    
+    Update/delete is restricted by custom IsReviewer permission.
+    """
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     permission_classes = [IsReviewer]

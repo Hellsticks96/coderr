@@ -11,6 +11,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ['username', 'email', 'password', 'type']
 
 class RegistrationSerializer(serializers.ModelSerializer):
+    """
+    Serializer for user registration.
+
+    Validates unique username/email, ensures password confirmation,
+    and creates a new User instance with a hashed password.
+    """
     email = serializers.EmailField(
         required=True,
         allow_blank=False,
@@ -43,6 +49,12 @@ class RegistrationSerializer(serializers.ModelSerializer):
         return user
 
 class CustomAuthTokenSerializer(serializers.Serializer):
+    """
+    Custom authentication serializer supporting login via username or email.
+    
+    Validates credentials and resolves email-based login to username
+    before authenticating the user.
+    """
     username = serializers.CharField(required=False, allow_blank=True)
     email = serializers.EmailField(required=False, allow_blank=True)
     password = serializers.CharField()

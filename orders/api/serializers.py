@@ -33,6 +33,13 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         fields = ['offer_detail_id']
 
     def create(self, validated_data):
+        """
+        Creates an Order from an Offer Detail.
+
+        Maps Offer Detail fields into a new Order and assigns:
+        - customer_user from request
+        - business_user from related package owner
+        """
         request = self.context['request']
         customer_user = request.user
         detail_id = validated_data['offer_detail_id']
