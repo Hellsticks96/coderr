@@ -98,10 +98,10 @@ class CustomAuthTokenSerializer(serializers.Serializer):
             try:
                 user_obj = User.objects.get(email=email)
                 username = user_obj.username
-            except User.DoesNotExist:
+            except User.DoesNotExist as err:
                 raise serializers.ValidationError(
                     {"detail": ["Invalid email or password."]}
-                )
+                ) from err
 
         user = authenticate(username=username, password=password)
 

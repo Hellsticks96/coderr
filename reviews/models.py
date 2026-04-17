@@ -12,7 +12,7 @@ class Review(models.Model):
         User, on_delete=models.CASCADE, related_name="reviews_written"
     )
     rating = models.PositiveSmallIntegerField()
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, default="")
 
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)

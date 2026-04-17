@@ -14,6 +14,9 @@ class Package(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"Package #{self.id}"
+
 
 class Detail(models.Model):
     package = models.ForeignKey(
@@ -25,3 +28,6 @@ class Detail(models.Model):
     price = models.FloatField()
     features = models.JSONField(default=list)
     offer_type = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.package} - detail #{self.id}"
