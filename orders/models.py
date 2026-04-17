@@ -6,25 +6,19 @@ from user_auth_app.models import User
 
 class Order(models.Model):
     STATUS_CHOICES = (
-        ('in_progress', 'In Progress'),
-        ('completed', 'Completed'),
-        ('cancelled', 'Cancelled'),
+        ("in_progress", "In Progress"),
+        ("completed", "Completed"),
+        ("cancelled", "Cancelled"),
     )
 
     customer_user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='orders_as_customer'
+        User, on_delete=models.CASCADE, related_name="orders_as_customer"
     )
     business_user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='orders_as_business'
+        User, on_delete=models.CASCADE, related_name="orders_as_business"
     )
     detail = models.ForeignKey(
-        'offers.Detail',
-        on_delete=models.CASCADE,
-        related_name='orders'
+        "offers.Detail", on_delete=models.CASCADE, related_name="orders"
     )
 
     title = models.CharField(max_length=255)
@@ -34,7 +28,9 @@ class Order(models.Model):
     features = models.JSONField(default=list)
     offer_type = models.CharField(max_length=50)
 
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='in_progress')
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default="in_progress"
+    )
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 

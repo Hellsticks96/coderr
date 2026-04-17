@@ -6,11 +6,7 @@ class IsCustomerUser(permissions.BasePermission):
 
     def has_permission(self, request, view):
         user = request.user
-        return bool(
-            user
-            and user.is_authenticated
-            and user.type == "customer"
-        )
+        return bool(user and user.is_authenticated and user.type == "customer")
 
 
 class IsBusinessUser(permissions.BasePermission):
@@ -18,11 +14,7 @@ class IsBusinessUser(permissions.BasePermission):
 
     def has_permission(self, request, view):
         user = request.user
-        return bool(
-            user
-            and user.is_authenticated
-            and user.type == "business"
-        )
+        return bool(user and user.is_authenticated and user.type == "business")
 
 
 class IsAdminUser(permissions.BasePermission):
@@ -30,7 +22,5 @@ class IsAdminUser(permissions.BasePermission):
 
     def has_permission(self, request, view):
         return bool(
-            request.user
-            and request.user.is_authenticated
-            and request.user.is_staff
+            request.user and request.user.is_authenticated and request.user.is_staff
         )

@@ -3,7 +3,7 @@ from rest_framework import serializers
 from user_auth_app.models import User
 
 
-#Serializer for profile views. Get list of all users, get all customer users, get all business users or patch user.
+# Serializer for profile views. Get list of all users, get all customer users, get all business users or patch user.
 class UserProfileSerializer(serializers.ModelSerializer):
     user = serializers.IntegerField(source="id", read_only=True)
 

@@ -4,27 +4,25 @@ from offers.models import Detail, Package
 
 
 class DetailSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Detail
         fields = [
-            'id',
-            'title',
-            'revisions',
-            'delivery_time_in_days',
-            'price',
-            'features',
-            'offer_type'
+            "id",
+            "title",
+            "revisions",
+            "delivery_time_in_days",
+            "price",
+            "features",
+            "offer_type",
         ]
 
 
 class DetailLinkSerializer(serializers.ModelSerializer):
-
-    url = serializers.HyperlinkedIdentityField(view_name='offers-detail')
+    url = serializers.HyperlinkedIdentityField(view_name="offers-detail")
 
     class Meta:
         model = Detail
-        fields = ['id', 'url']
+        fields = ["id", "url"]
 
 
 class PackageSerializer(serializers.ModelSerializer):
@@ -42,16 +40,16 @@ class PackageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Package
         fields = [
-            'id',
-            'user',
-            'title',
-            'image',
-            'description',
-            'created_at',
-            'updated_at',
-            'details',
-            'min_price',
-            'min_delivery_time'
+            "id",
+            "user",
+            "title",
+            "image",
+            "description",
+            "created_at",
+            "updated_at",
+            "details",
+            "min_price",
+            "min_delivery_time",
         ]
 
     def get_min_price(self, obj):
@@ -94,7 +92,7 @@ class PackageCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Package
-        fields = ['title', 'image', 'description', 'details']
+        fields = ["title", "image", "description", "details"]
 
     def create(self, validated_data):
         """
@@ -106,7 +104,7 @@ class PackageCreateSerializer(serializers.ModelSerializer):
         Returns:
             Package: The created package instance.
         """
-        details_data = validated_data.pop('details', [])
+        details_data = validated_data.pop("details", [])
         package = Package.objects.create(**validated_data)
 
         for detail in details_data:
@@ -125,7 +123,7 @@ class PackageCreateSerializer(serializers.ModelSerializer):
         Returns:
             Package: The updated package instance.
         """
-        details_data = validated_data.pop('details', None)
+        details_data = validated_data.pop("details", None)
 
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
@@ -151,53 +149,45 @@ class PackageCreateSerializer(serializers.ModelSerializer):
         Raises:
             serializers.ValidationError: If required fields are missing.
         """
-        details = data.get('details')
+        details = data.get("details")
 
         if details is not None:
             required_fields = [
-                'title',
-                'revisions',
-                'delivery_time_in_days',
-                'price',
-                'features',
-                'offer_type'
+                "title",
+                "revisions",
+                "delivery_time_in_days",
+                "price",
+                "features",
+                "offer_type",
             ]
 
             for detail in details:
                 for field in required_fields:
                     if field not in detail:
-                        raise serializers.ValidationError({
-                            'details': f"Field '{field}' is required for each detail."
-                        })
+                        raise serializers.ValidationError(
+                            {"details": f"Field '{field}' is required for each detail."}
+                        )
 
         return data
 
 
 class PackageCreateResponseSerializer(serializers.ModelSerializer):
-
     details = DetailSerializer(many=True, read_only=True)
 
     class Meta:
         model = Package
-        fields = [
-            'id',
-            'title',
-            'image',
-            'description',
-            'details'
-        ]
+        fields = ["id", "title", "image", "description", "details"]
 
 
 class DetailCreateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Detail
         fields = [
-            'package',
-            'title',
-            'revisions',
-            'delivery_time_in_days',
-            'price',
-            'features',
-            'offer_type'
+            "package",
+            "title",
+            "revisions",
+            "delivery_time_in_days",
+            "price",
+            "features",
+            "offer_type",
         ]

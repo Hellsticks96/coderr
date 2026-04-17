@@ -25,7 +25,7 @@ class OrderListCreateView(generics.ListCreateAPIView):
     """
 
     queryset = Order.objects.all().select_related(
-        'customer_user', 'business_user', 'detail'
+        "customer_user", "business_user", "detail"
     )
 
     def get_serializer_class(self):
@@ -35,7 +35,7 @@ class OrderListCreateView(generics.ListCreateAPIView):
         Returns:
             Serializer class for listing or creating orders.
         """
-        if self.request.method == 'POST':
+        if self.request.method == "POST":
             return OrderCreateSerializer
         return OrderSerializer
 
@@ -62,7 +62,7 @@ class OrderListCreateView(generics.ListCreateAPIView):
         Returns:
             List of permission instances.
         """
-        if self.request.method == 'POST':
+        if self.request.method == "POST":
             return [IsCustomerUser()]
         return [permissions.IsAuthenticated()]
 
@@ -88,7 +88,7 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
 
     queryset = Order.objects.all().select_related(
-        'customer_user', 'business_user', 'detail'
+        "customer_user", "business_user", "detail"
     )
     serializer_class = OrderDetailSerializer
 
@@ -96,9 +96,9 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
         """
         Returns permissions depending on request method.
         """
-        if self.request.method == 'PATCH':
+        if self.request.method == "PATCH":
             return [IsBusinessUser()]
-        elif self.request.method == 'DELETE':
+        elif self.request.method == "DELETE":
             return [IsAdminUser()]
         return [permissions.IsAuthenticated()]
 
@@ -121,13 +121,10 @@ class CompletedOrderCountView(APIView):
         business_user = get_object_or_404(User, id=pk)
 
         completed_count = Order.objects.filter(
-            business_user=business_user,
-            status='completed'
+            business_user=business_user, status="completed"
         ).count()
 
-        serializer = OrderCountSerializer(
-            {'completed_order_count': completed_count}
-        )
+        serializer = OrderCountSerializer({"completed_order_count": completed_count})
 
         return Response(serializer.data)
 
@@ -150,12 +147,9 @@ class OrderInProgressView(APIView):
         business_user = get_object_or_404(User, id=pk)
 
         total_count = Order.objects.filter(
-            business_user=business_user,
-            status='in_progress'
+            business_user=business_user, status="in_progress"
         ).count()
 
-        serializer = OrderTotalCountSerializer(
-            {'order_count': total_count}
-        )
+        serializer = OrderTotalCountSerializer({"order_count": total_count})
 
         return Response(serializer.data)

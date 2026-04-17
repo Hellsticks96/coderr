@@ -7,7 +7,15 @@ from .views import (
 )
 
 urlpatterns = [
-    path('offers/', OfferListCreateView.as_view(), name='offers-list'),
-    path('offers/<int:pk>/', OfferRetrieveUpdateDeleteView.as_view(), name='offers-detail'),
-    path('offerdetails/<int:pk>/', OfferDetailRetrieveView.as_view(), name='offers-detail'),
+    path("offers/", OfferListCreateView.as_view(), name="offers-list"),
+    path(
+        "offers/<int:pk>/",
+        OfferRetrieveUpdateDeleteView.as_view(),
+        name="offers-detail",
+    ),
+    path(
+        "offerdetails/<int:pk>/",
+        OfferDetailRetrieveView.as_view(),
+        name="offers-detail",
+    ),
 ]

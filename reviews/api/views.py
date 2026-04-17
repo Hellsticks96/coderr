@@ -7,7 +7,7 @@ from .permissions import IsReviewer
 from .serializers import ReviewSerializer
 
 
-#Get all reviews or post a single new review.
+# Get all reviews or post a single new review.
 class ReviewListCreateView(generics.ListCreateAPIView):
     """
     List reviews or create a new review.
@@ -20,6 +20,7 @@ class ReviewListCreateView(generics.ListCreateAPIView):
     - reviewer is automatically set from authenticated user
     - business_user is taken from request body
     """
+
     serializer_class = ReviewSerializer
 
     def get_permissions(self):
@@ -38,7 +39,7 @@ class ReviewListCreateView(generics.ListCreateAPIView):
             queryset = queryset.filter(reviewer_id=reviewer_id)
 
         return queryset
-    
+
     def perform_create(self, serializer):
         """
         Creates a review and assigns:
@@ -47,21 +48,20 @@ class ReviewListCreateView(generics.ListCreateAPIView):
         """
         business_user_id = self.request.data.get("business_user")
         if not business_user_id:
-            raise serializers.ValidationError({
-                "business_user": "This field is required."
-            })
-        serializer.save(
-            reviewer=self.request.user,
-            business_user_id=business_user_id
-        )
+            raise serializers.ValidationError(
+                {"business_user": "This field is required."}
+            )
+        serializer.save(reviewer=self.request.user, business_user_id=business_user_id)
 
-#Get details of a single review.    
+
+# Get details of a single review.
 class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve, update, or delete a review.
-    
+
     Update/delete is restricted by custom IsReviewer permission.
     """
+
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     permission_classes = [IsReviewer]
