@@ -1,7 +1,15 @@
 asgiref==3.9.1
+click==8.3.2
+colorama==0.4.6
 Django==5.2.6
 django-filter==25.1
 djangorestframework==3.16.1
+mypy_extensions==1.1.0
+packaging==26.1
+pathspec==1.0.4
 pillow==11.3.0
+platformdirs==4.9.6
+pytokens==0.4.1
+ruff==0.15.11
 sqlparse==0.5.3
 tzdata==2025.2
