@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import UserProfileList, UserProfileDetail, RegistrationView, CustomLoginView
-from rest_framework.authtoken.views import obtain_auth_token
+
+from .views import CustomLoginView, RegistrationView, UserProfileDetail, UserProfileList
 
 urlpatterns = [
     path('profiles/', UserProfileList.as_view(), name='User-list'),

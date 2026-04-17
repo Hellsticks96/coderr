@@ -1,5 +1,7 @@
 from rest_framework import serializers
+
 from reviews.models import Review
+
 
 #Serializer for reviews. Sorting parameters and declare read_only fields.
 class ReviewSerializer(serializers.ModelSerializer):

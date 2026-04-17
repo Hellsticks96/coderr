@@ -1,12 +1,18 @@
-from rest_framework import generics, permissions, status
-from offers.models import Package, Detail
-from .serializers import PackageSerializer, PackageCreateSerializer, DetailSerializer, PackageCreateResponseSerializer
-from rest_framework.pagination import PageNumberPagination
-from rest_framework.response import Response
-from .permissions import IsOwner
 from django.db.models import Min
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet, NumberFilter
-from rest_framework import filters
+from rest_framework import filters, generics, permissions, status
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
+
+from offers.models import Detail, Package
+
+from .permissions import IsOwner
+from .serializers import (
+    DetailSerializer,
+    PackageCreateResponseSerializer,
+    PackageCreateSerializer,
+    PackageSerializer,
+)
 
 
 class OfferPagination(PageNumberPagination):

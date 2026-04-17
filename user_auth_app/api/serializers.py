@@ -1,9 +1,9 @@
-import uuid
+from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+
 from user_auth_app.models import User
-from django.contrib.auth import authenticate
-from django.utils.translation import gettext_lazy as _
+
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:

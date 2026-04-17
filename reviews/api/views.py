@@ -1,9 +1,11 @@
 from rest_framework import generics, permissions, serializers
-from reviews.models import Review
-from .serializers import ReviewSerializer
+
 from orders.api.permissions import IsCustomerUser
+from reviews.models import Review
+
 from .permissions import IsReviewer
-from rest_framework.filters import OrderingFilter
+from .serializers import ReviewSerializer
+
 
 #Get all reviews or post a single new review.
 class ReviewListCreateView(generics.ListCreateAPIView):

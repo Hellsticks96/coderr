@@ -1,7 +1,10 @@
 from rest_framework import generics, permissions
-from .serializers import UserProfileSerializer
+
 from user_auth_app.models import User
+
 from .permissions import IsOwner
+from .serializers import UserProfileSerializer
+
 
 #Get all Profiles
 class ProfileView(generics.RetrieveUpdateAPIView):

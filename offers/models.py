@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
+
 from user_auth_app.models import User
+
 
 class Package(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='packages', null=True)

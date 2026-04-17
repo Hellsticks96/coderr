@@ -1,6 +1,8 @@
 from rest_framework import serializers
-from orders.models import Order
+
 from offers.models import Detail
+from orders.models import Order
+
 
 #Serializer for single order. Get only!
 class OrderSerializer(serializers.ModelSerializer):

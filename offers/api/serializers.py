@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from offers.models import Package, Detail
+
+from offers.models import Detail, Package
 
 
 class DetailSerializer(serializers.ModelSerializer):

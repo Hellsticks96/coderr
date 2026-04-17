@@ -1,5 +1,7 @@
 from django.contrib import admin
-from offers.models import Package, Detail
+
+from offers.models import Detail, Package
+
 
 class DetailInline(admin.TabularInline):
     model = Detail

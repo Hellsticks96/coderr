@@ -1,13 +1,18 @@
-from rest_framework import generics, permissions
-from user_auth_app.models import User
-from .serializers import RegistrationSerializer, UserProfileSerializer, CustomAuthTokenSerializer
-from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
+from rest_framework import generics, permissions, status
 from rest_framework.authtoken.models import Token
-from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework import status
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from profiles.api.permissions import IsOwner
+from user_auth_app.models import User
+
+from .serializers import (
+    RegistrationSerializer,
+    UserProfileSerializer,
+)
+
 
 class UserProfileList(generics.ListCreateAPIView):
     queryset = User.objects.all()
