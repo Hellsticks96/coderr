@@ -5,3 +5,4 @@ postman.zip
 testing.zip
 offers.zip
 __pycache__/
+*_initial.py
