@@ -109,19 +109,19 @@ class CustomAuthTokenSerializerTests(APITestCase):
 
     def test_valid_with_username(self):
         serializer = CustomAuthTokenSerializer(
-            data={"username": f"test_user_1_customer", "password": "testPass123"}
+            data={"username": self.user.username, "password": "testPass123"}
         )
         self.assertTrue(serializer.is_valid())
 
     def test_valid_with_email(self):
         serializer = CustomAuthTokenSerializer(
-            data={"email": f"test_user_1_customer@test.com", "password": "testPass123"}
+            data={"email": self.user.email, "password": "testPass123"}
         )
         self.assertTrue(serializer.is_valid())
 
     def test_invalid_password(self):
         serializer = CustomAuthTokenSerializer(
-            data={"username": "testuser", "password": "wrongpass"}
+            data={"username": self.user.username, "password": "wrongpass"}
         )
         self.assertFalse(serializer.is_valid())
 
@@ -132,7 +132,7 @@ class CustomAuthTokenSerializerTests(APITestCase):
         self.assertFalse(serializer.is_valid())
 
     def test_missing_password(self):
-        serializer = CustomAuthTokenSerializer(data={"username": "testuser"})
+        serializer = CustomAuthTokenSerializer(data={"username": self.user.username})
         self.assertFalse(serializer.is_valid())
 
     def test_missing_username_and_email(self):
@@ -141,7 +141,7 @@ class CustomAuthTokenSerializerTests(APITestCase):
 
     def test_returns_user_in_validated_data(self):
         serializer = CustomAuthTokenSerializer(
-            data={"username": "test_user_1_customer", "password": "testPass123"}
+            data={"username": self.user.username, "password": "testPass123"}
         )
         serializer.is_valid()
         self.assertTrue(serializer.is_valid())

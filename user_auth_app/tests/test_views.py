@@ -160,7 +160,7 @@ class CustomLoginViewTests(APITestCase):
     def test_login_with_username_returns_200(self):
         response = self.client.post(
             self.base_url,
-            {"username": f"test_user_1_customer", "password": "testPass123"},
+            {"username": self.user.username, "password": "testPass123"},
             format="json",
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -168,7 +168,7 @@ class CustomLoginViewTests(APITestCase):
     def test_login_returns_token(self):
         response = self.client.post(
             self.base_url,
-            {"username": "test_user_1_customer", "password": "testPass123"},
+            {"username": self.user.username, "password": "testPass123"},
             format="json",
         )
         self.assertIn("token", response.data)
@@ -176,7 +176,7 @@ class CustomLoginViewTests(APITestCase):
     def test_login_returns_user_data(self):
         response = self.client.post(
             self.base_url,
-            {"username": "test_user_1_customer", "password": "testPass123"},
+            {"username": self.user.username, "password": "testPass123"},
             format="json",
         )
         self.assertEqual(response.data["username"], "test_user_1_customer")
@@ -186,7 +186,7 @@ class CustomLoginViewTests(APITestCase):
     def test_wrong_password_returns_400(self):
         response = self.client.post(
             self.base_url,
-            {"username": f"test_user_1_customer", "password": "wrongpass"},
+            {"username": self.user.username, "password": "wrongpass"},
             format="json",
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -202,7 +202,7 @@ class CustomLoginViewTests(APITestCase):
     def test_missing_password_returns_400(self):
         response = self.client.post(
             self.base_url,
-            {"username": f"test_user_1_customer"},
+            {"username": self.user.username},
             format="json",
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
