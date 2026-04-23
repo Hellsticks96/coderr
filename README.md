@@ -21,17 +21,37 @@ Coderr is a Django-based platform designed to offer and manage various services.
 
 ### Clone the repository
 
-```bash
+````bash
 git clone https://github.com/Hellsticks96/coderr.git
 cd coderr
+
+### Development Setup
+
+After cloning the repo, run the following commands to enable the Git hooks:
+
+**Mac/Linux:**
+```bash
+git config core.hooksPath .githooks
+chmod +x .githooks/pre-commit
+````
+
+**Windows:**
+
+```bash
+git config core.hooksPath .githooks
+git update-index --chmod=+x .githooks/pre-commit
 ```
+
+This sets up a pre-commit hook that runs all tests before every commit.
+
+````
 
 ### Create and activate a virtual environment
 
 ```cmd
 python -m venv venv
 venv\Scripts\activate # on Windows
-```
+````
 
 ### Install dependencies
 
