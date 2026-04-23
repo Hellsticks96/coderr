@@ -9,6 +9,7 @@ packaging==26.1
 pathspec==1.0.4
 pillow==11.3.0
 platformdirs==4.9.6
+python-decouple==3.8
 pytokens==0.4.1
 ruff==0.15.11
 sqlparse==0.5.3
