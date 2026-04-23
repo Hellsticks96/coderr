@@ -1,11 +1,14 @@
+from django.contrib.auth import get_user_model
 from rest_framework.test import APITestCase
 
-from tests.utils import User, create_test_user
+from tests.utils import create_test_user
 from user_auth_app.api.serializers import (
     CustomAuthTokenSerializer,
     RegistrationSerializer,
     UserProfileSerializer,
 )
+
+User = get_user_model()
 
 
 class UserProfileSerializerTests(APITestCase):
