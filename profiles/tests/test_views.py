@@ -1,24 +1,7 @@
-from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-User = get_user_model()
-
-
-def create_test_user(user_type, username):
-    """
-    Helper to create a test user.
-
-    Args:
-        user_type (str): The user type, either 'customer' or 'business'.
-        username (str): A unique identifier appended to the generated username and email.
-    """
-    return User.objects.create_user(
-        username=f"test_{username}_{user_type}",
-        email=f"test_{username}_{user_type}@test.com",
-        password="testpass123",
-        type=user_type,
-    )
+from tests.utils import create_test_user
 
 
 class ProfileViewTests(APITestCase):
