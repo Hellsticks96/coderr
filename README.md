@@ -46,14 +46,12 @@ git update-index --chmod=+x .githooks/pre-commit
 
 This sets up a pre-commit hook that runs all tests before every commit.
 
-````
-
 ### Create and activate a virtual environment
 
 ```cmd
 python -m venv venv
 venv\Scripts\activate # on Windows
-````
+```
 
 ### Install dependencies
 
