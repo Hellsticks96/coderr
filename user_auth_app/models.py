@@ -13,5 +13,7 @@ class User(AbstractUser):
     tel = models.CharField(max_length=50, blank=True, default="")
     description = models.TextField(blank=True, default="")
     working_hours = models.CharField(max_length=100, blank=True, default="")
-    type = type = models.CharField(max_length=20,choices=USER_TYPE_CHOICES,blank=True,default="")
+    type = type = models.CharField(
+        max_length=20, choices=USER_TYPE_CHOICES, blank=True, default=""
+    )
     created_at = models.DateTimeField(default=timezone.now)

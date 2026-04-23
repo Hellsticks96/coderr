@@ -8,21 +8,24 @@ from user_auth_app.api.serializers import (
 )
 
 User = get_user_model()
+
+
 def create_test_user(user_type, username):
     """
-        Helper to create a standard user
+    Helper to create a standard user
 
-        Args:
+    Args:
 
-        type (User.type): the user type of the instance to be created.
+    type (User.type): the user type of the instance to be created.
 
     """
     return User.objects.create_user(
-            username=f"test_{username}_{user_type}",
-            email=f"test_{username}_{user_type}@test.com",
-            password="testPass123",
-            type=user_type,
-        )
+        username=f"test_{username}_{user_type}",
+        email=f"test_{username}_{user_type}@test.com",
+        password="testPass123",
+        type=user_type,
+    )
+
 
 class UserProfileSerializerTests(APITestCase):
     """Tests for UserProfileSerializer"""
@@ -35,6 +38,7 @@ class UserProfileSerializerTests(APITestCase):
         self.assertEqual(
             set(serializer.data.keys()), {"username", "email", "password", "type"}
         )
+
 
 class RegistrationSerializerTests(APITestCase):
     """Tests for RegistrationSerializer"""
@@ -95,6 +99,7 @@ class RegistrationSerializerTests(APITestCase):
         serializer.is_valid()
         user = serializer.save()
         self.assertFalse(hasattr(user, "repeated_password"))
+
 
 class CustomAuthTokenSerializerTests(APITestCase):
     """Tests for CustomAuthTokenSerializer"""

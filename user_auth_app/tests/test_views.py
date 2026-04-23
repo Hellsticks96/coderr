@@ -3,21 +3,24 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 User = get_user_model()
+
+
 def create_test_user(user_type, username):
     """
-        Helper to create a standard user
+    Helper to create a standard user
 
-        Args:
+    Args:
 
-        type (User.type): the user type of the instance to be created.
+    type (User.type): the user type of the instance to be created.
 
     """
     return User.objects.create_user(
-            username=f"test_{username}_{user_type}",
-            email=f"test_{username}_{user_type}@test.com",
-            password="testPass123",
-            type=user_type,
-        )
+        username=f"test_{username}_{user_type}",
+        email=f"test_{username}_{user_type}@test.com",
+        password="testPass123",
+        type=user_type,
+    )
+
 
 class UserProfileListViewTests(APITestCase):
     """Tests for GET /api/profiles/"""
@@ -36,6 +39,7 @@ class UserProfileListViewTests(APITestCase):
         response = self.client.get(self.base_url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
+
 class UserProfileDetailViewTests(APITestCase):
     """Tests for GET/PATCH/DELETE /api/profiles/<pk>/"""
 
@@ -50,7 +54,7 @@ class UserProfileDetailViewTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_retrieve_other_profile_returns_200(self):
-        #Any authenticated user can view any profile
+        # Any authenticated user can view any profile
         response = self.client.get(f"{self.base_url}/{self.other_user.pk}/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -86,6 +90,7 @@ class UserProfileDetailViewTests(APITestCase):
         self.client.force_authenticate(user=None)
         response = self.client.get(f"{self.base_url}/{self.user.pk}/")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
 
 class RegistrationViewTests(APITestCase):
     """Tests for POST /api/registration/"""
@@ -143,6 +148,7 @@ class RegistrationViewTests(APITestCase):
     def test_password_not_returned_in_response(self):
         response = self.client.post(self.base_url, self.valid_payload, format="json")
         self.assertNotIn("password", response.data)
+
 
 class CustomLoginViewTests(APITestCase):
     """Tests for POST /api/login/"""
@@ -207,4 +213,4 @@ class CustomLoginViewTests(APITestCase):
             {"password": "testPass123"},
             format="json",
         )
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)    
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
