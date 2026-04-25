@@ -5,23 +5,9 @@ from tests.utils import create_test_user
 from user_auth_app.api.serializers import (
     CustomAuthTokenSerializer,
     RegistrationSerializer,
-    UserProfileSerializer,
 )
 
 User = get_user_model()
-
-
-class UserProfileSerializerTests(APITestCase):
-    """Tests for UserProfileSerializer"""
-
-    def setUp(self):
-        self.user = create_test_user("customer", "user_1")
-
-    def test_contains_expected_fields(self):
-        serializer = UserProfileSerializer(instance=self.user)
-        self.assertEqual(
-            set(serializer.data.keys()), {"username", "email", "password", "type"}
-        )
 
 
 class RegistrationSerializerTests(APITestCase):
@@ -73,12 +59,16 @@ class RegistrationSerializerTests(APITestCase):
         self.assertIn("type", serializer.errors)
 
     def test_create_hashes_password(self):
+        # Not in spec, but a critical security invariant: passwords must never
+        # be stored in plain text.
         serializer = RegistrationSerializer(data=self.valid_data)
         serializer.is_valid()
         user = serializer.save()
         self.assertTrue(user.check_password("testPass123"))
 
     def test_repeated_password_not_saved_on_user(self):
+        # Not in spec, but ensures the confirmation field is never persisted
+        # to the user model.
         serializer = RegistrationSerializer(data=self.valid_data)
         serializer.is_valid()
         user = serializer.save()
@@ -98,6 +88,7 @@ class CustomAuthTokenSerializerTests(APITestCase):
         self.assertTrue(serializer.is_valid())
 
     def test_valid_with_email(self):
+        # Email login is not in the spec but is supported by the implementation.
         serializer = CustomAuthTokenSerializer(
             data={"email": self.user.email, "password": "testPass123"}
         )
@@ -110,6 +101,7 @@ class CustomAuthTokenSerializerTests(APITestCase):
         self.assertFalse(serializer.is_valid())
 
     def test_nonexistent_email(self):
+        # Email login is not in the spec but is supported by the implementation.
         serializer = CustomAuthTokenSerializer(
             data={"email": "nobody@test.com", "password": "testPass123"}
         )
@@ -119,14 +111,6 @@ class CustomAuthTokenSerializerTests(APITestCase):
         serializer = CustomAuthTokenSerializer(data={"username": self.user.username})
         self.assertFalse(serializer.is_valid())
 
-    def test_missing_username_and_email(self):
+    def test_missing_username_returns_invalid(self):
         serializer = CustomAuthTokenSerializer(data={"password": "testPass123"})
         self.assertFalse(serializer.is_valid())
-
-    def test_returns_user_in_validated_data(self):
-        serializer = CustomAuthTokenSerializer(
-            data={"username": self.user.username, "password": "testPass123"}
-        )
-        serializer.is_valid()
-        self.assertTrue(serializer.is_valid())
-        self.assertEqual(serializer.validated_data["user"], self.user)

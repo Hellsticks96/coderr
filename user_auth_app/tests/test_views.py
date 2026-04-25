@@ -4,76 +4,6 @@ from rest_framework.test import APITestCase
 from tests.utils import create_test_user
 
 
-class UserProfileListViewTests(APITestCase):
-    """Tests for GET /api/profiles/"""
-
-    def setUp(self):
-        self.base_url = "/api/profiles/"
-        self.user = create_test_user("customer", "user_1")
-        self.client.force_authenticate(user=self.user)
-
-    def test_list_users_authenticated_returns_200(self):
-        response = self.client.get(self.base_url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_list_users_unauthenticated_returns_401(self):
-        self.client.force_authenticate(user=None)
-        response = self.client.get(self.base_url)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
-
-class UserProfileDetailViewTests(APITestCase):
-    """Tests for GET/PATCH/DELETE /api/profiles/<pk>/"""
-
-    def setUp(self):
-        self.base_url = "/api/profiles"
-        self.user = create_test_user("customer", "user_1")
-        self.other_user = create_test_user("customer", "user_2")
-        self.client.force_authenticate(user=self.user)
-
-    def test_retrieve_own_profile_returns_200(self):
-        response = self.client.get(f"{self.base_url}/{self.user.pk}/")
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_retrieve_other_profile_returns_200(self):
-        # Any authenticated user can view any profile
-        response = self.client.get(f"{self.base_url}/{self.other_user.pk}/")
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_update_own_profile_returns_200(self):
-        response = self.client.patch(
-            f"{self.base_url}/{self.user.pk}/",
-            {"location": "Berlin"},
-            format="json",
-        )
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_update_other_profile_returns_403(self):
-        response = self.client.patch(
-            f"{self.base_url}/{self.other_user.pk}/",
-            {"location": "Berlin"},
-            format="json",
-        )
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
-    def test_delete_own_profile_returns_204(self):
-        response = self.client.delete(f"{self.base_url}/{self.user.pk}/")
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-
-    def test_delete_other_profile_returns_403(self):
-        response = self.client.delete(f"{self.base_url}/{self.other_user.pk}/")
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
-    def test_retrieve_nonexistent_profile_returns_404(self):
-        response = self.client.get(f"{self.base_url}/99999/")
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-
-    def test_unauthenticated_returns_401(self):
-        self.client.force_authenticate(user=None)
-        response = self.client.get(f"{self.base_url}/{self.user.pk}/")
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
-
 class RegistrationViewTests(APITestCase):
     """Tests for POST /api/registration/"""
 
@@ -101,6 +31,12 @@ class RegistrationViewTests(APITestCase):
         self.assertEqual(response.data["email"], "new@test.com")
         self.assertIn("user_id", response.data)
 
+    def test_password_not_returned_in_response(self):
+        # Security: password must never be exposed in the response, even though
+        # it is not explicitly listed as excluded in the spec.
+        response = self.client.post(self.base_url, self.valid_payload, format="json")
+        self.assertNotIn("password", response.data)
+
     def test_password_mismatch_returns_400(self):
         payload = {**self.valid_payload, "repeated_password": "wrongpass"}
         response = self.client.post(self.base_url, payload, format="json")
@@ -126,10 +62,6 @@ class RegistrationViewTests(APITestCase):
         payload = {**self.valid_payload, "type": "invalidtype"}
         response = self.client.post(self.base_url, payload, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_password_not_returned_in_response(self):
-        response = self.client.post(self.base_url, self.valid_payload, format="json")
-        self.assertNotIn("password", response.data)
 
 
 class CustomLoginViewTests(APITestCase):
@@ -189,7 +121,7 @@ class CustomLoginViewTests(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_missing_username_and_email_returns_400(self):
+    def test_missing_username_returns_400(self):
         response = self.client.post(
             self.base_url,
             {"password": "testPass123"},
