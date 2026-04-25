@@ -44,7 +44,7 @@ git config core.hooksPath .githooks
 git update-index --chmod=+x .githooks/pre-commit
 ```
 
-This sets up a pre-commit hook that runs all tests before every commit.
+This sets up a pre-commit hook that checks linting and formatting before every commit.
 
 ### Create and activate a virtual environment
 
@@ -101,10 +101,27 @@ http://127.0.0.1:8000/
 ### Running tests
 
 ```bash
-python manage.py test
+python manage.py test --verbosity=2
 ```
 
-The pre-commit hook runs this automatically before every commit.
+Tests also run automatically via GitHub Actions on every push and pull request to `main`.
+
+### Linting and formatting
+
+```bash
+ruff check .        # check for lint errors
+ruff format .       # auto-format code
+```
+
+The pre-commit hook runs both checks automatically before every commit.
+
+### GitHub Actions setup
+
+The CI workflow requires a `SECRET_KEY` secret to be set in your repository:
+
+1. Go to **Settings → Secrets and variables → Actions**
+2. Click **New repository secret**
+3. Name: `SECRET_KEY`, value: any secure random string
 
 ## Project Structure
 
