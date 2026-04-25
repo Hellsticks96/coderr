@@ -72,6 +72,45 @@ class ProfileViewTests(APITestCase):
         response = self.client.get(f"/api/profile/{self.user.pk}/")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
+    def test_update_unauthenticated_returns_401(self):
+        self.client.force_authenticate(user=None)
+        response = self.client.patch(
+            f"/api/profile/{self.user.pk}/",
+            {"location": "Berlin"},
+            format="json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_nonexistent_profile_returns_404(self):
+        response = self.client.patch(
+            "/api/profile/99999/",
+            {"location": "Berlin"},
+            format="json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_update_response_contains_expected_fields(self):
+        response = self.client.patch(
+            f"/api/profile/{self.user.pk}/",
+            {"location": "Berlin"},
+            format="json",
+        )
+        expected_fields = {
+            "user",
+            "username",
+            "first_name",
+            "last_name",
+            "file",
+            "location",
+            "tel",
+            "description",
+            "working_hours",
+            "type",
+            "email",
+            "created_at",
+        }
+        self.assertEqual(set(response.data.keys()), expected_fields)
+
 
 class CustomerListViewTests(APITestCase):
     """Tests for GET /api/profiles/customer/"""
