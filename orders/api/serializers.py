@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
 from offers.models import Detail
@@ -47,8 +48,8 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         customer_user = request.user
         detail_id = validated_data["offer_detail_id"]
 
-        detail = Detail.objects.select_related("package", "package__user").get(
-            id=detail_id
+        detail = get_object_or_404(
+            Detail.objects.select_related("package", "package__user"), id=detail_id
         )
         business_user = detail.package.user
 

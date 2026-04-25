@@ -11,6 +11,7 @@ from .serializers import (
     DetailSerializer,
     PackageCreateResponseSerializer,
     PackageCreateSerializer,
+    PackageListSerializer,
     PackageSerializer,
 )
 
@@ -62,7 +63,7 @@ class OfferListCreateView(generics.GenericAPIView):
         """Returns the appropriate serializer depending on request method."""
         if self.request.method == "POST":
             return PackageCreateSerializer
-        return PackageSerializer
+        return PackageListSerializer
 
     def get_permissions(self):
         """Restricts POST requests to authenticated users only."""

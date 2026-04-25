@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions, serializers
+from rest_framework import filters, generics, permissions, serializers
 
 from orders.api.permissions import IsCustomerUser
 from reviews.models import Review
@@ -16,12 +16,19 @@ class ReviewListCreateView(generics.ListCreateAPIView):
     - business_user_id
     - reviewer_id
 
+    Supports ordering by:
+    - rating
+    - updated_at
+
     On creation:
     - reviewer is automatically set from authenticated user
     - business_user is taken from request body
     """
 
     serializer_class = ReviewSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ["rating", "updated_at"]
+    ordering = ["-updated_at"]
 
     def get_permissions(self):
         if self.request.method == "POST":
