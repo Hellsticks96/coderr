@@ -41,7 +41,9 @@ class PackageSerializerTests(APITestCase):
         self.request = APIRequestFactory().get("/")
 
     def test_contains_expected_fields(self):
-        serializer = PackageSerializer(instance=self.package, context={"request": self.request})
+        serializer = PackageSerializer(
+            instance=self.package, context={"request": self.request}
+        )
         expected_fields = {
             "id",
             "user",
@@ -57,16 +59,22 @@ class PackageSerializerTests(APITestCase):
         self.assertEqual(set(serializer.data.keys()), expected_fields)
 
     def test_list_serializer_contains_user_details(self):
-        serializer = PackageListSerializer(instance=self.package, context={"request": self.request})
+        serializer = PackageListSerializer(
+            instance=self.package, context={"request": self.request}
+        )
         self.assertIn("user_details", serializer.data)
         self.assertIn("username", serializer.data["user_details"])
 
     def test_min_price_returns_lowest_detail_price(self):
-        serializer = PackageSerializer(instance=self.package, context={"request": self.request})
+        serializer = PackageSerializer(
+            instance=self.package, context={"request": self.request}
+        )
         self.assertEqual(serializer.data["min_price"], 99.99)
 
     def test_min_delivery_time_returns_shortest_delivery_time(self):
-        serializer = PackageSerializer(instance=self.package, context={"request": self.request})
+        serializer = PackageSerializer(
+            instance=self.package, context={"request": self.request}
+        )
         self.assertEqual(serializer.data["min_delivery_time"], 3)
 
     def test_min_price_is_none_when_no_details(self):
@@ -75,7 +83,9 @@ class PackageSerializerTests(APITestCase):
             title="Empty",
             description="No details",
         )
-        serializer = PackageSerializer(instance=empty_package, context={"request": self.request})
+        serializer = PackageSerializer(
+            instance=empty_package, context={"request": self.request}
+        )
         self.assertIsNone(serializer.data["min_price"])
 
     def test_min_delivery_time_is_none_when_no_details(self):
@@ -84,11 +94,15 @@ class PackageSerializerTests(APITestCase):
             title="Empty",
             description="No details",
         )
-        serializer = PackageSerializer(instance=empty_package, context={"request": self.request})
+        serializer = PackageSerializer(
+            instance=empty_package, context={"request": self.request}
+        )
         self.assertIsNone(serializer.data["min_delivery_time"])
 
     def test_details_is_a_list(self):
-        serializer = PackageSerializer(instance=self.package, context={"request": self.request})
+        serializer = PackageSerializer(
+            instance=self.package, context={"request": self.request}
+        )
         self.assertIsInstance(serializer.data["details"], list)
 
 
@@ -126,7 +140,10 @@ class PackageCreateSerializerTests(APITestCase):
 
     def test_detail_missing_required_field_is_invalid(self):
         incomplete_detail = {k: v for k, v in VALID_DETAILS[0].items() if k != "price"}
-        data = {**self.valid_data, "details": [incomplete_detail, VALID_DETAILS[1], VALID_DETAILS[2]]}
+        data = {
+            **self.valid_data,
+            "details": [incomplete_detail, VALID_DETAILS[1], VALID_DETAILS[2]],
+        }
         serializer = PackageCreateSerializer(data=data)
         self.assertFalse(serializer.is_valid())
 

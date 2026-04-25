@@ -15,7 +15,9 @@ class ReviewSerializerTests(APITestCase):
         self.request.user = self.customer_user
 
     def test_contains_expected_fields(self):
-        serializer = ReviewSerializer(instance=self.review, context={"request": self.request})
+        serializer = ReviewSerializer(
+            instance=self.review, context={"request": self.request}
+        )
         expected_fields = {
             "id",
             "business_user",

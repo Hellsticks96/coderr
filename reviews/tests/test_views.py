@@ -45,7 +45,9 @@ class ReviewListViewGetTests(APITestCase):
         other_business = create_test_user("business", "seller_2")
         other_customer = create_test_user("customer", "buyer_2")
         create_test_review(other_customer, other_business)
-        response = self.client.get(self.base_url, {"business_user_id": self.business_user.pk})
+        response = self.client.get(
+            self.base_url, {"business_user_id": self.business_user.pk}
+        )
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["business_user"], self.business_user.pk)
 
@@ -53,7 +55,9 @@ class ReviewListViewGetTests(APITestCase):
         other_customer = create_test_user("customer", "buyer_2")
         other_business = create_test_user("business", "seller_2")
         create_test_review(other_customer, other_business)
-        response = self.client.get(self.base_url, {"reviewer_id": self.customer_user.pk})
+        response = self.client.get(
+            self.base_url, {"reviewer_id": self.customer_user.pk}
+        )
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["reviewer"], self.customer_user.pk)
 
