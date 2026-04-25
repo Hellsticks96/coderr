@@ -121,7 +121,10 @@ class OfferListViewPostTests(APITestCase):
 
     def test_create_detail_missing_required_field_returns_400(self):
         incomplete_detail = {k: v for k, v in VALID_DETAILS[0].items() if k != "price"}
-        payload = {**self.valid_payload, "details": [incomplete_detail, VALID_DETAILS[1], VALID_DETAILS[2]]}
+        payload = {
+            **self.valid_payload,
+            "details": [incomplete_detail, VALID_DETAILS[1], VALID_DETAILS[2]],
+        }
         response = self.client.post(self.base_url, payload, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 

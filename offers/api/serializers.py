@@ -80,6 +80,7 @@ class PackageSerializer(serializers.ModelSerializer):
             return min(d.delivery_time_in_days for d in obj.details.all())
         return None
 
+
 class PackageListSerializer(PackageSerializer):
     """Extends PackageSerializer with user_details for the list endpoint."""
 
@@ -147,7 +148,9 @@ class PackageCreateSerializer(serializers.ModelSerializer):
         if details_data is not None:
             for detail_data in details_data:
                 offer_type = detail_data.get("offer_type")
-                Detail.objects.filter(package=instance, offer_type=offer_type).update(**detail_data)
+                Detail.objects.filter(package=instance, offer_type=offer_type).update(
+                    **detail_data
+                )
 
         return instance
 
@@ -169,7 +172,9 @@ class PackageCreateSerializer(serializers.ModelSerializer):
         if details is not None:
             if not self.partial and len(details) < 3:
                 raise serializers.ValidationError(
-                    {"details": "At least 3 details (basic, standard, premium) are required."}
+                    {
+                        "details": "At least 3 details (basic, standard, premium) are required."
+                    }
                 )
 
             required_fields = [

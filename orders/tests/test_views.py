@@ -127,7 +127,9 @@ class OrderListViewPostTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_nonexistent_offer_detail_returns_404(self):
-        response = self.client.post(self.base_url, {"offer_detail_id": 99999}, format="json")
+        response = self.client.post(
+            self.base_url, {"offer_detail_id": 99999}, format="json"
+        )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 

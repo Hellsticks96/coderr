@@ -52,6 +52,7 @@ def create_test_user(user_type, username):
         type=user_type,
     )
 
+
 def create_test_package(user, title="Test Package"):
     """
     Helper to create a test package with one detail.
