@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 
 from offers.models import Detail, Package
 from orders.models import Order
+from reviews.models import Review
 
 User = get_user_model()
 
@@ -98,4 +99,22 @@ def create_test_order(customer_user, business_user, status="in_progress"):
         features=detail.features,
         offer_type=detail.offer_type,
         status=status,
+    )
+
+
+def create_test_review(reviewer, business_user, rating=5, description="Great work!"):
+    """
+    Helper to create a test review from a customer for a business user.
+
+    Args:
+        reviewer (User): The customer leaving the review.
+        business_user (User): The business being reviewed.
+        rating (int): Optional star rating (default: 5).
+        description (str): Optional review text.
+    """
+    return Review.objects.create(
+        reviewer=reviewer,
+        business_user=business_user,
+        rating=rating,
+        description=description,
     )
