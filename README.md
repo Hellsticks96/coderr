@@ -13,7 +13,7 @@ Coderr is a Django-based platform designed to offer and manage various services.
 ## Requirements
 
 - Python 3.10 or higher
-- Django 4.x
+- Django 5.x
 - pip (Python package manager)
 - Virtual environment (recommended)
 
@@ -48,26 +48,47 @@ This sets up a pre-commit hook that runs all tests before every commit.
 
 ### Create and activate a virtual environment
 
+**Mac/Linux:**
+
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+**Windows:**
+
 ```cmd
 python -m venv venv
-venv\Scripts\activate # on Windows
+venv\Scripts\activate
 ```
 
 ### Install dependencies
 
-```cmd
+```bash
 pip install -r requirements.txt
 ```
 
+### Configure environment variables
+
+Create a `.env` file in the project root with the following variables:
+
+```env
+SECRET_KEY=your-secret-key-here
+DEBUG=True
+ALLOWED_HOSTS=127.0.0.1,localhost
+```
+
+`SECRET_KEY` is required. `DEBUG` and `ALLOWED_HOSTS` fall back to safe defaults if omitted.
+
 ### Apply migrations
 
-```cmd
+```bash
 python manage.py migrate
 ```
 
 ### Run the development server
 
-```cmd
+```bash
 python manage.py runserver
 ```
 
@@ -77,24 +98,31 @@ Open your browser and go to:
 
 http://127.0.0.1:8000/
 
-### Project Structure
+### Running tests
 
-Project Structure
+```bash
+python manage.py test
+```
+
+The pre-commit hook runs this automatically before every commit.
+
+## Project Structure
 
 ```
 coderr/
 │
-├── core/ # Core project settings and URLs
-├── offers/ # Handles service offerings
-├── orders/ # Manages service orders
-├── profiles/ # User and provider profiles
-├── reviews/ # Service review system
-├── user_auth_app/ # Authentication and user management
+├── coderr/          # Django project config (settings, URLs, WSGI)
+├── core/            # Platform stats API
+├── offers/          # Service offerings and details
+├── orders/          # Order creation and management
+├── profiles/        # User and business profiles
+├── reviews/         # Review system
+├── user_auth_app/   # Authentication and user model
+├── tests/           # Shared test utilities
 ├── requirements.txt # Project dependencies
-└── manage.py # Django management script
+└── manage.py        # Django management script
 ```
 
-### License
+## License
 
-This project is open source and available under the MIT License
-.
+This project is open source and available under the MIT License.
