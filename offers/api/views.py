@@ -4,9 +4,9 @@ from rest_framework import filters, generics, permissions, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
+from coderr.permissions import IsOwner
 from offers.models import Detail, Package
 
-from .permissions import IsOwner
 from .serializers import (
     DetailSerializer,
     PackageCreateResponseSerializer,

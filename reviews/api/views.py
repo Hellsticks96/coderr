@@ -1,9 +1,8 @@
 from rest_framework import filters, generics, permissions, serializers
 
-from orders.api.permissions import IsCustomerUser
+from coderr.permissions import IsCustomerUser, IsReviewer
 from reviews.models import Review
 
-from .permissions import IsReviewer
 from .serializers import ReviewSerializer
 
 

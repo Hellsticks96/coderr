@@ -4,9 +4,9 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from coderr.permissions import IsAdminUser, IsBusinessUser, IsCustomerUser
 from orders.models import Order
 
-from .permissions import IsAdminUser, IsBusinessUser, IsCustomerUser
 from .serializers import (
     OrderCountSerializer,
     OrderCreateSerializer,

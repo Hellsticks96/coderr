@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from profiles.api.permissions import IsOwner
+from coderr.permissions import IsOwner
 from user_auth_app.models import User
 
 from .serializers import (
@@ -14,9 +14,10 @@ from .serializers import (
 )
 
 
-class UserProfileList(generics.ListCreateAPIView):
+class UserProfileList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
