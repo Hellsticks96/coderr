@@ -113,6 +113,16 @@ python manage.py test --verbosity=2
 
 Tests also run automatically via GitHub Actions on every push and pull request to `main`.
 
+### Collect static files
+
+Required before deploying to production:
+
+```bash
+python manage.py collectstatic --noinput
+```
+
+Static files are served by WhiteNoise in production. The output directory (`staticfiles/`) is git-ignored.
+
 ### Linting and formatting
 
 ```bash
