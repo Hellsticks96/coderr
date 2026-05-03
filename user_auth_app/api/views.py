@@ -14,9 +14,10 @@ from .serializers import (
 )
 
 
-class UserProfileList(generics.ListCreateAPIView):
+class UserProfileList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
