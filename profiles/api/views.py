@@ -1,8 +1,8 @@
 from rest_framework import generics, permissions
 
+from coderr.permissions import IsOwner
 from user_auth_app.models import User
 
-from .permissions import IsOwner
 from .serializers import UserProfileSerializer
 
 
