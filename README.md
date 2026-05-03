@@ -9,6 +9,7 @@ Coderr is a Django-based platform designed to offer and manage various services.
 - Order creation and tracking
 - Review system for services and providers
 - Profile management for users and service providers
+- Interactive API documentation via Swagger UI
 
 ## Requirements
 
@@ -97,6 +98,12 @@ python manage.py runserver
 Open your browser and go to:
 
 http://127.0.0.1:8000/
+
+### API documentation
+
+Interactive Swagger UI is available at:
+
+http://127.0.0.1:8000/api/schema/swagger-ui/
 
 ### Running tests
 
