@@ -77,9 +77,10 @@ Create a `.env` file in the project root with the following variables:
 SECRET_KEY=your-secret-key-here
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
+DATABASE_URL=postgres://user:password@host:5432/dbname
 ```
 
-`SECRET_KEY` is required. `DEBUG` and `ALLOWED_HOSTS` fall back to safe defaults if omitted.
+`SECRET_KEY` is required. `DEBUG`, `ALLOWED_HOSTS`, and `DATABASE_URL` fall back to safe defaults if omitted — omitting `DATABASE_URL` uses SQLite locally.
 
 ### Apply migrations
 
