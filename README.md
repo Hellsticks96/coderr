@@ -158,6 +158,23 @@ coderr/
 └── manage.py        # Django management script
 ```
 
+## Deployment (Railway)
+
+The project is configured for deployment on [Railway](https://railway.app) via `railway.toml`.
+
+### Required environment variables
+
+Set these in Railway's dashboard under your service's **Variables** tab:
+
+| Variable | Description |
+|---|---|
+| `SECRET_KEY` | Django secret key |
+| `DEBUG` | Set to `False` |
+| `ALLOWED_HOSTS` | Your Railway domain, e.g. `yourapp.railway.app` |
+| `DATABASE_URL` | Set automatically by Railway when a Postgres service is attached |
+
+Railway runs `collectstatic` and `migrate` automatically on each deploy before starting the server.
+
 ## License
 
 This project is open source and available under the MIT License.
