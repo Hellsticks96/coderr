@@ -9,6 +9,7 @@ Coderr is a Django-based platform designed to offer and manage various services.
 - Order creation and tracking
 - Review system for services and providers
 - Profile management for users and service providers
+- Interactive API documentation via Swagger UI
 
 ## Requirements
 
@@ -76,9 +77,10 @@ Create a `.env` file in the project root with the following variables:
 SECRET_KEY=your-secret-key-here
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
+DATABASE_URL=postgres://user:password@host:5432/dbname
 ```
 
-`SECRET_KEY` is required. `DEBUG` and `ALLOWED_HOSTS` fall back to safe defaults if omitted.
+`SECRET_KEY` is required. `DEBUG`, `ALLOWED_HOSTS`, and `DATABASE_URL` fall back to safe defaults if omitted — omitting `DATABASE_URL` uses SQLite locally.
 
 ### Apply migrations
 
@@ -98,6 +100,12 @@ Open your browser and go to:
 
 http://127.0.0.1:8000/
 
+### API documentation
+
+Interactive Swagger UI is available at:
+
+http://127.0.0.1:8000/api/schema/swagger-ui/
+
 ### Running tests
 
 ```bash
@@ -105,6 +113,16 @@ python manage.py test --verbosity=2
 ```
 
 Tests also run automatically via GitHub Actions on every push and pull request to `main`.
+
+### Collect static files
+
+Required before deploying to production:
+
+```bash
+python manage.py collectstatic --noinput
+```
+
+Static files are served by WhiteNoise in production. The output directory (`staticfiles/`) is git-ignored.
 
 ### Linting and formatting
 
@@ -139,6 +157,23 @@ coderr/
 ├── requirements.txt # Project dependencies
 └── manage.py        # Django management script
 ```
+
+## Deployment (Railway)
+
+The project is configured for deployment on [Railway](https://railway.app) via `railway.toml`.
+
+### Required environment variables
+
+Set these in Railway's dashboard under your service's **Variables** tab:
+
+| Variable | Description |
+|---|---|
+| `SECRET_KEY` | Django secret key |
+| `DEBUG` | Set to `False` |
+| `ALLOWED_HOSTS` | Your Railway domain, e.g. `yourapp.railway.app` |
+| `DATABASE_URL` | Set automatically by Railway when a Postgres service is attached |
+
+Railway runs `collectstatic` and `migrate` automatically on each deploy before starting the server.
 
 ## License
 
