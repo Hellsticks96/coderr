@@ -1,3 +1,4 @@
+from django.db.models import Min
 from rest_framework import serializers
 
 from offers.models import Detail, Package
@@ -53,32 +54,10 @@ class PackageSerializer(serializers.ModelSerializer):
         ]
 
     def get_min_price(self, obj):
-        """
-        Returns the lowest price among all related details.
-
-        Args:
-            obj (Package): The package instance.
-
-        Returns:
-            float | None: Minimum price or None if no details exist.
-        """
-        if obj.details.exists():
-            return min(d.price for d in obj.details.all())
-        return None
+        return obj.details.aggregate(min=Min("price"))["min"]
 
     def get_min_delivery_time(self, obj):
-        """
-        Returns the shortest delivery time among all related details.
-
-        Args:
-            obj (Package): The package instance.
-
-        Returns:
-            int | None: Minimum delivery time or None if no details exist.
-        """
-        if obj.details.exists():
-            return min(d.delivery_time_in_days for d in obj.details.all())
-        return None
+        return obj.details.aggregate(min=Min("delivery_time_in_days"))["min"]
 
 
 class PackageListSerializer(PackageSerializer):
@@ -202,17 +181,3 @@ class PackageCreateResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Package
         fields = ["id", "title", "image", "description", "details"]
-
-
-class DetailCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Detail
-        fields = [
-            "package",
-            "title",
-            "revisions",
-            "delivery_time_in_days",
-            "price",
-            "features",
-            "offer_type",
-        ]

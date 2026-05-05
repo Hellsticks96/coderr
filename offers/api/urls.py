@@ -11,7 +11,7 @@ urlpatterns = [
     path(
         "offers/<int:pk>/",
         OfferRetrieveUpdateDeleteView.as_view(),
-        name="offers-detail",
+        name="offer-detail",
     ),
     path(
         "offerdetails/<int:pk>/",
