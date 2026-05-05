@@ -4,7 +4,7 @@ from rest_framework import filters, generics, permissions, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
-from coderr.permissions import IsOwner
+from coderr.permissions import IsBusinessUser, IsOwner
 from offers.models import Detail, Package
 
 from .serializers import (
@@ -66,9 +66,9 @@ class OfferListCreateView(generics.GenericAPIView):
         return PackageListSerializer
 
     def get_permissions(self):
-        """Restricts POST requests to authenticated users only."""
+        """Restricts POST requests to business users only."""
         if self.request.method == "POST":
-            return [permissions.IsAuthenticated()]
+            return [IsBusinessUser()]
         return []
 
     def get_queryset(self):
@@ -91,19 +91,6 @@ class OfferListCreateView(generics.GenericAPIView):
 
     def post(self, request):
         """Creates a new offer package for business users."""
-        try:
-            profile = request.user
-        except Exception:
-            return Response(
-                {"detail": "User profile not found."}, status=status.HTTP_403_FORBIDDEN
-            )
-
-        if profile.type != "business":
-            return Response(
-                {"detail": "Only business users can create offers."},
-                status=status.HTTP_403_FORBIDDEN,
-            )
-
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(user=request.user)
