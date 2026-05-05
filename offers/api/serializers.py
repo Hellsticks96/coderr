@@ -181,17 +181,3 @@ class PackageCreateResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Package
         fields = ["id", "title", "image", "description", "details"]
-
-
-class DetailCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Detail
-        fields = [
-            "package",
-            "title",
-            "revisions",
-            "delivery_time_in_days",
-            "price",
-            "features",
-            "offer_type",
-        ]
