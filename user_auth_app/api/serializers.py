@@ -5,7 +5,7 @@ from rest_framework.validators import UniqueValidator
 from user_auth_app.models import User
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["username", "email", "password", "type"]
@@ -67,6 +67,13 @@ class RegistrationSerializer(serializers.ModelSerializer):
         user.set_password(validated_data["password"])
         user.save()
         return user
+
+
+class AuthResponseSerializer(serializers.Serializer):
+    token = serializers.CharField()
+    username = serializers.CharField()
+    email = serializers.EmailField()
+    user_id = serializers.IntegerField()
 
 
 class CustomAuthTokenSerializer(serializers.Serializer):

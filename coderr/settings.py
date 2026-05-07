@@ -158,4 +158,12 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "REST API for the Coderr freelance platform.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
+    "TAGS": [
+        {"name": "auth"},
+        {"name": "profiles"},
+        {"name": "offers"},
+        {"name": "orders"},
+        {"name": "reviews"},
+        {"name": "core"},
+    ],
 }
