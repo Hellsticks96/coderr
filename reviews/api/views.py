@@ -1,4 +1,4 @@
-from rest_framework import filters, generics, permissions, serializers
+from rest_framework import filters, generics, permissions
 
 from coderr.permissions import IsCustomerUser, IsReviewer
 from reviews.models import Review
@@ -47,17 +47,7 @@ class ReviewListCreateView(generics.ListCreateAPIView):
         return queryset
 
     def perform_create(self, serializer):
-        """
-        Creates a review and assigns:
-        - reviewer from request.user
-        - business_user from request data
-        """
-        business_user_id = self.request.data.get("business_user")
-        if not business_user_id:
-            raise serializers.ValidationError(
-                {"business_user": "This field is required."}
-            )
-        serializer.save(reviewer=self.request.user, business_user_id=business_user_id)
+        serializer.save(reviewer=self.request.user)
 
 
 # Get details of a single review.
