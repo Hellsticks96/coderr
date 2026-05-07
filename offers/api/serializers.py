@@ -1,4 +1,5 @@
 from django.db.models import Min
+from drf_spectacular.utils import extend_schema_field, inline_serializer
 from rest_framework import serializers
 
 from offers.models import Detail, Package
@@ -53,9 +54,11 @@ class PackageSerializer(serializers.ModelSerializer):
             "min_delivery_time",
         ]
 
+    @extend_schema_field(serializers.FloatField(allow_null=True))
     def get_min_price(self, obj):
         return obj.details.aggregate(min=Min("price"))["min"]
 
+    @extend_schema_field(serializers.IntegerField(allow_null=True))
     def get_min_delivery_time(self, obj):
         return obj.details.aggregate(min=Min("delivery_time_in_days"))["min"]
 
@@ -68,6 +71,16 @@ class PackageListSerializer(PackageSerializer):
     class Meta(PackageSerializer.Meta):
         fields = PackageSerializer.Meta.fields + ["user_details"]
 
+    @extend_schema_field(
+        inline_serializer(
+            "UserDetails",
+            {
+                "first_name": serializers.CharField(),
+                "last_name": serializers.CharField(),
+                "username": serializers.CharField(),
+            },
+        )
+    )
     def get_user_details(self, obj):
         return {
             "first_name": obj.user.first_name,
