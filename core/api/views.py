@@ -34,11 +34,7 @@ class StatsView(APIView):
 
         data = {
             "review_count": review_data["review_count"] or 0,
-            "average_rating": (
-                round(review_data["average_rating"], 1)
-                if review_data["average_rating"]
-                else 0
-            ),
+            "average_rating": round(review_data["average_rating"] or 0, 1),
             "business_profile_count": business_profile_count,
             "offer_count": offer_count,
         }
