@@ -1,10 +1,10 @@
-# Coderr API
+# Coderr
 
-A REST API for a freelance services marketplace. Business users create tiered service offers, customers place orders, and both sides can manage profiles and reviews.
+A freelance services marketplace. Business users create tiered service offers, customers place orders, and both sides can manage profiles and reviews.
 
-Built with Django REST Framework and deployed on Railway with separate staging and production environments.
+Built with Django REST Framework and a vanilla JS frontend, deployed on Railway with separate staging and production environments.
 
-**Live API:** _link coming soon_  
+**Live:** _link coming soon_  
 **API Docs (Swagger UI):** _link coming soon_
 
 ---
@@ -12,13 +12,15 @@ Built with Django REST Framework and deployed on Railway with separate staging a
 ## Tech Stack
 
 - **Django 5** / **Django REST Framework**
+- **Vanilla JS** frontend served via WhiteNoise
 - **PostgreSQL** (production) / SQLite (local)
 - **Token authentication**
 - **Railway** (hosting + CI/CD)
 - **GitHub Actions** (automated testing on every PR)
 - **drf-spectacular** (OpenAPI schema + Swagger UI)
 - **WhiteNoise** (static file serving)
-- **Ruff** (linting + formatting)
+- **Ruff** (Python linting + formatting)
+- **Prettier** (JS/HTML/CSS formatting)
 
 ---
 
@@ -39,7 +41,7 @@ Built with Django REST Framework and deployed on Railway with separate staging a
 ### Prerequisites
 
 - Python 3.10+
-- pip
+- Node.js 22+
 
 ### Setup
 
@@ -56,6 +58,7 @@ source env/bin/activate
 env\Scripts\activate
 
 pip install -r requirements.txt
+npm install
 ```
 
 ### Git hooks
@@ -91,6 +94,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+Frontend: http://127.0.0.1:8000/index.html  
 Swagger UI: http://127.0.0.1:8000/api/schema/swagger-ui/
 
 ---
@@ -109,14 +113,15 @@ Tests run automatically via GitHub Actions on every push and pull request to `ma
 
 ```
 coderr/
-├── coderr/          # Project config (settings, URLs, WSGI)
-├── core/            # Platform stats endpoint
-├── offers/          # Service packages and offer details
-├── orders/          # Order creation and management
-├── profiles/        # User and business profiles
-├── reviews/         # Review system
-├── user_auth_app/   # Custom user model and authentication
-└── tests/           # Shared test utilities
+├── coderr/           # Project config (settings, URLs, WSGI)
+├── core/             # Platform stats endpoint
+├── offers/           # Service packages and offer details
+├── orders/           # Order creation and management
+├── profiles/         # User and business profiles
+├── reviews/          # Review system
+├── user_auth_app/    # Custom user model and authentication
+├── tests/            # Shared test utilities
+└── coderr-frontend/  # Vanilla JS frontend
 ```
 
 ---
