@@ -7,3 +7,4 @@ offers.zip
 __pycache__/
 .env
 staticfiles/
+node_modules/
