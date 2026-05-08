@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "prettier:format": "prettier --write coderr-frontend",
+    "prettier:check": "prettier --check coderr-frontend"
+  },
+  "dependencies": {
+    "prettier": "^3.8.3"
+  }
+}
