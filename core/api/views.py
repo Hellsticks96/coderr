@@ -1,4 +1,5 @@
 from django.db.models import Avg, Count
+from drf_spectacular.utils import extend_schema
 from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -6,6 +7,8 @@ from rest_framework.views import APIView
 from offers.models import Package
 from reviews.models import Review
 from user_auth_app.models import User
+
+from .serializers import StatsSerializer
 
 
 class StatsView(APIView):
@@ -16,6 +19,7 @@ class StatsView(APIView):
 
     permission_classes = [permissions.AllowAny]
 
+    @extend_schema(tags=["core"], responses={200: StatsSerializer})
     def get(self, request):
         """
         Retrieve aggregated statistics for the platform.
