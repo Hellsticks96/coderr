@@ -89,7 +89,7 @@ function getReviewEditableTemplate(review, business_user, reviewer) {
         <div class="card d_flex_cs_gm f_d_c own_review">
                         <button onclick="openReviewEditDialog(${review.id})"
                             class="d_flex_cc_gl btn_round_m btn_edit abs_pos_edit_btn">
-                            <img src="./assets/icons/more_vert.svg" alt="" srcset="">
+                            <img src="/assets/icons/more_vert.svg" alt="" srcset="">
                         </button>
                         <div class="d_flex_cs_gm f_d_r_resp_c">
                             <img class="profile_img_small" src="${getPersonImgPath(reviewer.user.file)}" alt="Benutzeravatar">
@@ -122,7 +122,7 @@ function getReviewDialogformTemplate(review, edit = false) {
                     <h2 class="font_prime_color">Bewertung ändern</h2>
                     <button type="button" onclick="closeDialog('rating_dialog')"
                             class="d_flex_cc_gl btn_round_l btn_edit abs_pos_edit_btn_m">
-                            <img src="./assets/icons/close_black.svg" alt="">
+                            <img src="/assets/icons/close_black.svg" alt="">
                     </button>
                     <div class="star_rating d_flex_cs_gm">
                         <div id="review_stars_input" class="review_stars stars_input">
@@ -148,7 +148,7 @@ function getDeleteOrNotTemplate(review_id) {
   return `
         <form onclick="stopProp(event)" class="m_auto small_form d_flex_cs_gm f_d_c pos_rel">
                     <div class="d_flex_cc_gxl f_d_c w_full">
-            <img class="profile_img" src="./assets/icons/error_circle_red.svg" alt="" srcset="">
+            <img class="profile_img" src="/assets/icons/error_circle_red.svg" alt="" srcset="">
             <h2 class="text_a_c">Bewertung unwideruflich löschen?</h2>
             <div class="d_flex_cc_gm f_d_r_resp_c w_full">
                 <button onclick="deleteReview(${review_id})" class="std_btn btn_delete pad_s">löschen</button>
@@ -167,10 +167,10 @@ function getStarsEditTemplate(count) {
   for (let index = 1; index < 6; index++) {
     if (count >= index) {
       starsHTML +=
-        '<img src="./assets/icons/kid_star.svg" onmouseenter="updateStars(this)" alt="" srcset="">';
+        '<img src="/assets/icons/kid_star.svg" onmouseenter="updateStars(this)" alt="" srcset="">';
     } else {
       starsHTML +=
-        '<img src="./assets/icons/kid_star_empty.svg" onmouseenter="updateStars(this)" alt="" srcset="">';
+        '<img src="/assets/icons/kid_star_empty.svg" onmouseenter="updateStars(this)" alt="" srcset="">';
     }
   }
   return starsHTML;
@@ -183,10 +183,10 @@ function getStarsTemplate(count) {
   let starsHTML = "";
   for (let index = 1; index < 6; index++) {
     if (count >= index) {
-      starsHTML += '<img src="./assets/icons/kid_star.svg" alt="" srcset="">';
+      starsHTML += '<img src="/assets/icons/kid_star.svg" alt="" srcset="">';
     } else {
       starsHTML +=
-        '<img src="./assets/icons/kid_star_empty.svg" alt="" srcset="">';
+        '<img src="/assets/icons/kid_star_empty.svg" alt="" srcset="">';
     }
   }
   return starsHTML;

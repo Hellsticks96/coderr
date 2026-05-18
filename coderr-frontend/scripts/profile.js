@@ -31,7 +31,7 @@ async function init() {
   let response = await setCurrentUser();
 
   if (!response.ok) {
-    window.location.href = "./login.html";
+    window.location.href = "/login/";
   } else {
     await renderPage();
     setHeader();

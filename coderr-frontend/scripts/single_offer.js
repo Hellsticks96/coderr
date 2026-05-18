@@ -41,7 +41,7 @@ async function loadRenderSingleOffer() {
   const urlParams = new URLSearchParams(window.location.search);
   const profileId = urlParams.get("id");
   if (!profileId) {
-    window.location.href = "index.html";
+    window.location.href = "/";
   } else {
     let offerResp = await setSingleOffer(profileId);
     if (offerResp.ok) {

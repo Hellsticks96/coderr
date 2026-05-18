@@ -15,7 +15,7 @@ function getOfferTemplateList(offers) {
 function getEmptyOfferListTemplate() {
   return `
         <div class=" d_flex_cc_gl f_d_c w_full">
-            <img class="nothing_found_img" src="./assets/img/nothing_found.png" alt="Nothing found image">
+            <img class="nothing_found_img" src="/assets/img/nothing_found.png" alt="Nothing found image">
             <h3 class="font_prime_color">Wir konnten keine Dienstleistungen finden, die deiner Suche entsprechen</h3>
         </div>`;
 }
@@ -35,13 +35,13 @@ function getOfferPagination(currentMax, currentPage) {
   return `
     <div class="d_flex_cc_gm f_d_r w_full">
         <button onclick="goToOfferPage(${currentPage - 1})" class="d_flex_cc_gl btn_round_m btn_edit " ${currentPage <= 1 ? 'disabled="disabled"' : ""}>
-            <img class="rotate_half" src="./assets/icons/arrow_right_alt.svg" alt="">
+            <img class="rotate_half" src="/assets/icons/arrow_right_alt.svg" alt="">
         </button>
         <div class="d_flex_cc_gm" style="width:150px;">
             ${getPaginationNumbers(currentMax, currentPage)}
         </div>
         <button onclick="goToOfferPage(${currentPage + 1})" class="d_flex_cc_gl btn_round_m btn_edit " ${currentPage >= currentMax ? 'disabled="disabled"' : ""}>
-            <img  src="./assets/icons/arrow_right_alt.svg" alt="">
+            <img  src="/assets/icons/arrow_right_alt.svg" alt="">
         </button>
     </div>`;
 }
@@ -119,7 +119,7 @@ function getBusinessOfferTemplate(offer) {
                     <div class="d_flex_cs_gm f_d_c pos_rel w_full">
                         <button onclick="openOfferDialog(${offer.id})"
                             class="d_flex_cc_gl btn_round_m btn_edit abs_pos_edit_btn_s">
-                            <img src="./assets/icons/edit.svg" alt="" srcset="">
+                            <img src="/assets/icons/edit.svg" alt="" srcset="">
                         </button>
                         <h3 class="own_offer_header d_flex_cc_gm">${offer.title}</h3>
                         <p>${offer.description}</p>
@@ -150,7 +150,7 @@ function getOfferDialogTemplate() {
                     <h2 class="font_prime_color p_top_s">${title}</h2> 
                     <button onclick="closeEditDialog()"
                         class="d_flex_cc_gl btn_round_l btn_edit abs_pos_edit_btn_m">
-                        <img src="./assets/icons/close_black.svg" alt="">
+                        <img src="/assets/icons/close_black.svg" alt="">
                     </button>
                     <form onsubmit="onOfferSubmit(event)" id="add_offer_form" class="d_flex_cc_gl f_d_c w_full" novalidate>
                         <div class="form_group ">
@@ -159,7 +159,7 @@ function getOfferDialogTemplate() {
                                     id="offer_img_input_output">
                                 <div onclick="clickFileInput('offer_img_input')"
                                     class="file_input_l d_flex_cc_gl btn_round_l btn_edit">
-                                    <img src="./assets/icons/edit.svg" alt="" srcset="">
+                                    <img src="/assets/icons/edit.svg" alt="" srcset="">
                                     <input onchange="changeCurrentFiles(this)" type="file" id="offer_img_input"
                                         accept="image/*">
                                 </div>
@@ -220,7 +220,7 @@ function getOfferDetailDialogTemplate(detail) {
   return `            <section class="variant_section section_group d_flex_cs_gl f_d_c">
                             <button id="add_offer_${detail.offer_type}_btn" type="button" open="false"
                                 class="std_btn btn_prime pad_s order_btn_close d_flex_cc_gm" onclick="toggleOpen(this)">
-                                <img src="./assets/icons/close.png" alt="" srcset="">
+                                <img src="/assets/icons/close.png" alt="" srcset="">
                             </button>
                             <h2>${detail.offer_type}</h2>
 
@@ -317,10 +317,10 @@ function getOfferDetailFeatureTemplate(detail, featureIndex) {
                                                 <p>${detail.features[featureIndex]}</p>
                                                 <div class="d_flex_cc_gm f_d_r">
                                                     <button onclick="openEditFeature('feature_${detail.offer_type}_${featureIndex}_input','${detail.offer_type}',${featureIndex})" type="button" class="d_flex_cc_gl btn_round_m btn_edit">
-                                                        <img src="./assets/icons/edit.svg" alt="">
+                                                        <img src="/assets/icons/edit.svg" alt="">
                                                     </button>
                                                     <button onclick="deleteEditFeature('feature_${detail.offer_type}_${featureIndex}_input', ${featureIndex}, '${detail.offer_type}')" type="button" class="d_flex_cc_gl btn_round_m btn_edit">
-                                                        <img src="./assets/icons/delete_join.svg" alt="">
+                                                        <img src="/assets/icons/delete_join.svg" alt="">
                                                     </button>
                                                 </div>
                                             </li>`;
@@ -335,10 +335,10 @@ function getOfferDetailFeatureEditTemplate(detail, featureIndex) {
                                                     id="feature_${detail.offer_type}_${featureIndex}_input" value="${getEditFeature(`feature_${detail.offer_type}_${featureIndex}_input`).value}">
                                             <div class="d_flex_cs_gm">
                                                     <button onclick="saveEditFeature('feature_${detail.offer_type}_${featureIndex}_input', ${featureIndex}, '${detail.offer_type}')" type="button" class="d_flex_cc_gl btn_round_m btn_edit">
-                                                        <img src="./assets/icons/ok_join.svg" alt="">
+                                                        <img src="/assets/icons/ok_join.svg" alt="">
                                                     </button>
                                                     <button onclick="deleteEditFeature('feature_${detail.offer_type}_${featureIndex}_input', ${featureIndex}, '${detail.offer_type}')" type="button" class="d_flex_cc_gl btn_round_m btn_edit">
-                                                        <img src="./assets/icons/delete_join.svg" alt="">
+                                                        <img src="/assets/icons/delete_join.svg" alt="">
                                                     </button>
                                             </div>
                                         </li>

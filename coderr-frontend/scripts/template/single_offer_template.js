@@ -25,7 +25,7 @@ function getsingleOfferHeaderTemplate() {
                                 </p>
                             </div>
                             <div class="offer_detail_review">
-                                <img src="./assets/icons/kid_star_green.svg" alt="">
+                                <img src="/assets/icons/kid_star_green.svg" alt="">
                                 <p class="font_prime_color">${meanValueReviews()}</p>
                                 <p>(${currentReviews.length})</p>
                             </div>
@@ -56,11 +56,11 @@ function getSingleOfferDetailTemplate() {
             <h3 class="font_prime_color">${currentOpenedDetail.price} €</h3>
             <h3>${currentOpenedDetail.title}</h3>
             <p class="d_flex_cc_gm">
-                <img src="./assets/icons/schedule.svg" alt="Lieferzeit Icon" class="icon">
+                <img src="/assets/icons/schedule.svg" alt="Lieferzeit Icon" class="icon">
                 ${currentOpenedDetail.delivery_time_in_days} Tag(e) Lieferzeit
             </p>
             <p class="d_flex_cc_gm">
-                <img src="./assets/icons/autorenew.svg" alt="Revisionen Icon" class="icon">
+                <img src="/assets/icons/autorenew.svg" alt="Revisionen Icon" class="icon">
                 ${getRevisionTemplate()}
             </p>
             <ul class="feature_list">
@@ -136,17 +136,17 @@ function getShowOrderDialogContentTemplate() {
 
                     <div class="d_flex_cs_gm f_d_c">
                         <p class="d_flex_cc_gm">
-                            <img src="./assets/icons/box.svg" alt="Paket Icon" class="icon">
+                            <img src="/assets/icons/box.svg" alt="Paket Icon" class="icon">
                             ${currentOpenedDetail.offer_type} Paket
                         </p>
                         <p class="d_flex_cc_gm">
-                            <img src="./assets/icons/schedule.svg" alt="Lieferzeit Icon" class="icon">
+                            <img src="/assets/icons/schedule.svg" alt="Lieferzeit Icon" class="icon">
                             ${
                               currentOpenedDetail.delivery_time_in_days
                             } Tag(e) Lieferzeit
                         </p>
                         <p class="d_flex_cc_gm">
-                            <img src="./assets/icons/autorenew.svg" alt="Revisionen Icon" class="icon">
+                            <img src="/assets/icons/autorenew.svg" alt="Revisionen Icon" class="icon">
                             ${getRevisionTemplate()}
                         </p>
 
@@ -175,7 +175,7 @@ function getShowOrderDialogContentTemplate() {
  */
 function getSendOrderDialogContentTemplate() {
   return `<div class="d_flex_cc_gxl f_d_c w_full">
-                <img src="./assets/icons/check_circle.svg" alt="" srcset="">
+                <img src="/assets/icons/check_circle.svg" alt="" srcset="">
                 <h2 class="text_a_c">Erfolgreich Bestellung aufgegeben</h2>
                 <div class="d_flex_cc_gm f_d_r_resp_c w_full">
                     <button onclick="redirectToOwnProfile()" class="std_btn btn_prime pad_s">Status checken</button>

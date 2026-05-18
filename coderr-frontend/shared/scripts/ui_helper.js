@@ -52,9 +52,9 @@ function updateStars(star) {
 
   for (let i = 0; i < stars.length; i++) {
     if (i <= index) {
-      stars[i].src = "./assets/icons/kid_star.svg";
+      stars[i].src = "/assets/icons/kid_star.svg";
     } else {
-      stars[i].src = "./assets/icons/kid_star_empty.svg";
+      stars[i].src = "/assets/icons/kid_star_empty.svg";
     }
   }
 }
@@ -90,7 +90,7 @@ function getPersonImgPath(filepath) {
       return STATIC_BASE_URL + filepath;
     }
   } else {
-    return "./assets/icons/profile_pic.svg";
+    return "/assets/icons/profile_pic.svg";
   }
 }
 
@@ -102,7 +102,7 @@ function getOfferImgPath(filepath) {
       return STATIC_BASE_URL + filepath;
     }
   } else {
-    return "./assets/img/placeholder.jpg";
+    return "/assets/img/placeholder.jpg";
   }
 }
 
@@ -132,7 +132,7 @@ function showToastHint(msg = []) {
 
 function getToastHintHTML(msg) {
   return `<div class="toast_msg_left d_flex_cc_gm">
-                <img error="false" src="./assets/icons/check_circle_white.svg" alt="" srcset="">
+                <img error="false" src="/assets/icons/check_circle_white.svg" alt="" srcset="">
             </div>
             <div class="toast_msg_hint">
                 <h3>Hinweis</h3>
@@ -154,8 +154,8 @@ function getToastHTML(msg, error) {
   }
 
   return `<div class="toast_msg_left d_flex_cc_gm">
-                <img error="false" src="./assets/icons/check_circle_white.svg" alt="" srcset="">
-                <img error="true" src="./assets/icons/error_circle_white.svg" alt="" srcset="">
+                <img error="false" src="/assets/icons/check_circle_white.svg" alt="" srcset="">
+                <img error="true" src="/assets/icons/error_circle_white.svg" alt="" srcset="">
             </div>
             <div class="toast_msg_right">
                 <h3 error="false">Success</h3>
@@ -196,6 +196,6 @@ function togglePassword(element) {
   passwordField.type = type;
   element.innerHTML =
     type === "password"
-      ? '<img src="./assets/icons/visibility.svg" alt="" srcset="">'
-      : '<img src="./assets/icons/visibility_off.svg" alt="" srcset="">';
+      ? '<img src="/assets/icons/visibility.svg" alt="" srcset="">'
+      : '<img src="/assets/icons/visibility_off.svg" alt="" srcset="">';
 }

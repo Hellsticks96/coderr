@@ -5,7 +5,7 @@
  */
 function checkAuthLogin() {
   if (getAuthToken()) {
-    window.location.href = "./index.html";
+    window.location.href = "/";
   }
   setHeader();
 }
