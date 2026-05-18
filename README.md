@@ -73,7 +73,7 @@ git config core.hooksPath .githooks
 git update-index --chmod=+x .githooks/pre-commit
 ```
 
-The pre-commit hook runs linting and formatting checks before every commit.
+The pre-commit hook runs Python linting and formatting checks (Ruff) and frontend formatting checks (Prettier) before every commit.
 
 ### Environment variables
 
@@ -105,7 +105,7 @@ Swagger UI: http://127.0.0.1:8000/api/schema/swagger-ui/
 python manage.py test --verbosity=2
 ```
 
-Tests run automatically via GitHub Actions on every push and pull request to `main`. Dependabot keeps dependencies up to date with weekly scans.
+Tests and linting run automatically via GitHub Actions on every push and pull request to `main`, `test`, and `release`. A separate CI job checks frontend formatting with Prettier. Dependabot keeps dependencies up to date with weekly scans.
 
 ---
 
