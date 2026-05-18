@@ -1,5 +1,6 @@
 from django.db.models import Min
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet, NumberFilter
+from drf_spectacular.utils import extend_schema
 from rest_framework import filters, generics, permissions, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -82,6 +83,7 @@ class OfferListCreateView(generics.GenericAPIView):
             .order_by("id")
         )
 
+    @extend_schema(operation_id="offers_list", responses={200: PackageListSerializer})
     def get(self, request):
         """Returns a paginated list of filtered offers."""
         queryset = self.filter_queryset(self.get_queryset())

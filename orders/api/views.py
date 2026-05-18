@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from drf_spectacular.utils import extend_schema
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -116,6 +117,7 @@ class CompletedOrderCountView(APIView):
 
     permission_classes = [permissions.IsAuthenticated]
 
+    @extend_schema(tags=["orders"], responses={200: OrderCountSerializer})
     def get(self, request, pk):
         User = get_user_model()
         business_user = get_object_or_404(User, id=pk)
@@ -142,6 +144,7 @@ class OrderInProgressView(APIView):
 
     permission_classes = [permissions.IsAuthenticated]
 
+    @extend_schema(tags=["orders"], responses={200: OrderTotalCountSerializer})
     def get(self, request, pk):
         User = get_user_model()
         business_user = get_object_or_404(User, id=pk)

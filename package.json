@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "prettier:format": "npx prettier --write coderr-frontend",
+    "prettier:check": "npx prettier --check coderr-frontend"
+  },
+  "dependencies": {
+    "prettier": "^3.8.3"
+  }
+}

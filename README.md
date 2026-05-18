@@ -1,10 +1,10 @@
-# Coderr API
+# Coderr
 
-A REST API for a freelance services marketplace. Business users create tiered service offers, customers place orders, and both sides can manage profiles and reviews.
+A freelance services marketplace. Business users create tiered service offers, customers place orders, and both sides can manage profiles and reviews.
 
-Built with Django REST Framework and deployed on Railway with separate staging and production environments.
+Built with Django REST Framework and a vanilla JS frontend, deployed on Railway with separate staging and production environments.
 
-**Live API:** _link coming soon_  
+**Live:** _link coming soon_  
 **API Docs (Swagger UI):** _link coming soon_
 
 ---
@@ -12,13 +12,16 @@ Built with Django REST Framework and deployed on Railway with separate staging a
 ## Tech Stack
 
 - **Django 5** / **Django REST Framework**
+- **Vanilla JS** frontend served via WhiteNoise
 - **PostgreSQL** (production) / SQLite (local)
 - **Token authentication**
 - **Railway** (hosting + CI/CD)
 - **GitHub Actions** (automated testing on every PR)
 - **drf-spectacular** (OpenAPI schema + Swagger UI)
 - **WhiteNoise** (static file serving)
-- **Ruff** (linting + formatting)
+- **[Cloudinary](https://cloudinary.com)** (cloud media storage for image uploads)
+- **Ruff** (Python linting + formatting)
+- **Prettier** (JS/HTML/CSS formatting)
 
 ---
 
@@ -39,7 +42,7 @@ Built with Django REST Framework and deployed on Railway with separate staging a
 ### Prerequisites
 
 - Python 3.10+
-- pip
+- Node.js 22+
 
 ### Setup
 
@@ -56,6 +59,7 @@ source env/bin/activate
 env\Scripts\activate
 
 pip install -r requirements.txt
+npm install
 ```
 
 ### Git hooks
@@ -70,7 +74,7 @@ git config core.hooksPath .githooks
 git update-index --chmod=+x .githooks/pre-commit
 ```
 
-The pre-commit hook runs linting and formatting checks before every commit.
+The pre-commit hook runs Python linting and formatting checks (Ruff) and frontend formatting checks (Prettier) before every commit.
 
 ### Environment variables
 
@@ -80,9 +84,14 @@ Create a `.env` file in the project root:
 SECRET_KEY=your-secret-key-here
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
+
+# Optional — required only for image uploads
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
 ```
 
-`SECRET_KEY` is required. `DEBUG` and `ALLOWED_HOSTS` fall back to safe defaults if omitted. `DATABASE_URL` is optional locally — omitting it uses SQLite.
+`SECRET_KEY` is required. `DEBUG` and `ALLOWED_HOSTS` fall back to safe defaults if omitted. `DATABASE_URL` is optional locally — omitting it uses SQLite. The Cloudinary variables are optional but required for image upload functionality.
 
 ### Run
 
@@ -91,6 +100,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+Frontend: http://127.0.0.1:8000/index.html  
 Swagger UI: http://127.0.0.1:8000/api/schema/swagger-ui/
 
 ---
@@ -101,7 +111,7 @@ Swagger UI: http://127.0.0.1:8000/api/schema/swagger-ui/
 python manage.py test --verbosity=2
 ```
 
-Tests run automatically via GitHub Actions on every push and pull request to `main`. Dependabot keeps dependencies up to date with weekly scans.
+Tests and linting run automatically via GitHub Actions on every push and pull request to `main`, `test`, and `release`. A separate CI job checks frontend formatting with Prettier. Dependabot keeps dependencies up to date with weekly scans.
 
 ---
 
@@ -109,14 +119,15 @@ Tests run automatically via GitHub Actions on every push and pull request to `ma
 
 ```
 coderr/
-├── coderr/          # Project config (settings, URLs, WSGI)
-├── core/            # Platform stats endpoint
-├── offers/          # Service packages and offer details
-├── orders/          # Order creation and management
-├── profiles/        # User and business profiles
-├── reviews/         # Review system
-├── user_auth_app/   # Custom user model and authentication
-└── tests/           # Shared test utilities
+├── coderr/           # Project config (settings, URLs, WSGI)
+├── core/             # Platform stats endpoint
+├── offers/           # Service packages and offer details
+├── orders/           # Order creation and management
+├── profiles/         # User and business profiles
+├── reviews/          # Review system
+├── user_auth_app/    # Custom user model and authentication
+├── tests/            # Shared test utilities
+└── coderr-frontend/  # Vanilla JS frontend
 ```
 
 ---
@@ -135,6 +146,9 @@ Railway runs `collectstatic` and `migrate` automatically on each deploy.
 | `DEBUG` | `False` |
 | `ALLOWED_HOSTS` | Your Railway domain |
 | `DATABASE_URL` | Set automatically when a Postgres service is attached |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name (optional — image uploads only) |
+| `CLOUDINARY_API_KEY` | Cloudinary API key (optional — image uploads only) |
+| `CLOUDINARY_API_SECRET` | Cloudinary API secret (optional — image uploads only) |
 
 ### CI/CD
 
