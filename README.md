@@ -19,6 +19,7 @@ Built with Django REST Framework and a vanilla JS frontend, deployed on Railway 
 - **GitHub Actions** (automated testing on every PR)
 - **drf-spectacular** (OpenAPI schema + Swagger UI)
 - **WhiteNoise** (static file serving)
+- **[Cloudinary](https://cloudinary.com)** (cloud media storage for image uploads)
 - **Ruff** (Python linting + formatting)
 - **Prettier** (JS/HTML/CSS formatting)
 
@@ -83,9 +84,14 @@ Create a `.env` file in the project root:
 SECRET_KEY=your-secret-key-here
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
+
+# Optional — required only for image uploads
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
 ```
 
-`SECRET_KEY` is required. `DEBUG` and `ALLOWED_HOSTS` fall back to safe defaults if omitted. `DATABASE_URL` is optional locally — omitting it uses SQLite.
+`SECRET_KEY` is required. `DEBUG` and `ALLOWED_HOSTS` fall back to safe defaults if omitted. `DATABASE_URL` is optional locally — omitting it uses SQLite. The Cloudinary variables are optional but required for image upload functionality.
 
 ### Run
 
@@ -140,6 +146,9 @@ Railway runs `collectstatic` and `migrate` automatically on each deploy.
 | `DEBUG` | `False` |
 | `ALLOWED_HOSTS` | Your Railway domain |
 | `DATABASE_URL` | Set automatically when a Postgres service is attached |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name (optional — image uploads only) |
+| `CLOUDINARY_API_KEY` | Cloudinary API key (optional — image uploads only) |
+| `CLOUDINARY_API_SECRET` | Cloudinary API secret (optional — image uploads only) |
 
 ### CI/CD
 
