@@ -65,7 +65,7 @@ async function initBProfile() {
   let response = await setCurrentUser();
   setHeader();
   if (!response.ok) {
-    window.location.href = "./login.html";
+    window.location.href = "/login/";
   } else {
     await loadBusinessUser();
     currentOfferBusinessProfileFilter.creator_id = currentBusinessUser.user;
@@ -92,7 +92,7 @@ async function loadRenderBusinessBaseInfo() {
       resp.data.completed_order_count;
   }
   document.getElementById("business_profile_avg_rating").innerHTML =
-    `${meanValueReviews()}<img src="./assets/icons/kid_star.svg" alt="" srcset="">`;
+    `${meanValueReviews()}<img src="/assets/icons/kid_star.svg" alt="" srcset="">`;
   document.getElementById("business_profile_review_count").innerText =
     currentReviews.length;
   document.getElementById("business_profile_offer_count").innerText =
@@ -111,14 +111,14 @@ async function loadBusinessUser() {
   const urlParams = new URLSearchParams(window.location.search);
   const profileId = urlParams.get("id");
   if (!profileId) {
-    window.location.href = "index.html";
+    window.location.href = "/";
   } else {
     let resp = await getData(PROFILE_URL + profileId + "/");
     if (resp.ok) {
       if (resp.data.type == "business") {
         currentBusinessUser = resp.data;
       } else {
-        window.location.href = `customer_profile.html?id=${resp.data.user}`;
+        window.location.href = `/customer-profile/?id=${resp.data.user}`;
       }
     } else {
       extractErrorMessages(resp.data);

@@ -23,7 +23,7 @@ function getBusinessProfilePageTemplate(
                     <button onclick="redirectToBusinessProfile(${
                       currentUser.user
                     })" class="std_btn btn_prime d_flex_cc_gm w_full">
-                        <img src="./assets/icons/visibility.svg" alt="" srcset="">
+                        <img src="/assets/icons/visibility.svg" alt="" srcset="">
                         zum öffentlichen Profil
                     </button>
                 </section>
@@ -65,7 +65,7 @@ function getBusinessProfilePageTemplate(
                         <div class="w_full d_flex_cc_gm review_footer">
                             <hr>
                             <p class="link d_flex_cc_gm">
-                                <img src="./assets/icons/add.svg" alt="" srcset="">
+                                <img src="/assets/icons/add.svg" alt="" srcset="">
                                 Mehr anzeigen
                             </p>
                         </div>
@@ -95,7 +95,7 @@ function getBusinessOfferTemplateList(currentOffers) {
         <div class="d_flex_cc_gm f_d_r_resp_c">
             <h2 class="font_prime_color">Meine Angebote</h2>
             <button onclick="openOfferDialog()" class="std_btn btn_prime pad_s d_flex_cc_gm">Angebot hinzufügen 
-                <img src="./assets/icons/add_white.svg" alt="" srcset="">
+                <img src="/assets/icons/add_white.svg" alt="" srcset="">
             </button>
         </div>`;
 
@@ -140,7 +140,7 @@ function getBusinessOrderTemplate(order) {
                         <li class="order_item_box d_flex_cc_gm w_full f_d_c">
                             <button open=false class="std_btn btn_prime pad_s order_btn_close d_flex_cc_gm"
                                 onclick="toggleOpen(this)">
-                                <img src="./assets/icons/close.png" alt="" srcset="">
+                                <img src="/assets/icons/close.png" alt="" srcset="">
                             </button>
                             <div class="order_item d_flex_cs_gm">
                                 <div class="order_info ">
@@ -153,7 +153,7 @@ function getBusinessOrderTemplate(order) {
                                     class="order_status d_flex_cc_gm c_pointer dropdown_wrapper">
                                     <div class="order_status_icon"></div>
                                     <p>${orderStatus[order.status]}</p>
-                                    <img src="./assets/icons/arrow_drop_down.svg" alt="">
+                                    <img src="/assets/icons/arrow_drop_down.svg" alt="">
                                     <div class="dropdown_box">
                                         <ul class="card dropdown_content d_flex_cc_gm f_d_c" >
                                             <li onclick="changeOrderStatus('in_progress',${
@@ -245,7 +245,7 @@ function getBusinessProfileTemplate(currentUser) {
   return `      
                     <button onclick="openDialog('business_dialog')"
                         class="d_flex_cc_gl btn_round_l btn_edit abs_pos_edit_btn">
-                        <img src="./assets/icons/edit.svg" alt="">
+                        <img src="/assets/icons/edit.svg" alt="">
                     </button>
                     <div class="d_flex_cs_gm f_d_c profile_detail">
                         <h1 class="font_prime_color w_full">Mein Profil</h1>
@@ -268,27 +268,27 @@ function getBusinessProfileTemplate(currentUser) {
                         <div class="d_flex_cs_gm f_d_c w_full">
                             <hr class="about_me_top_hr">
                             <p class="d_flex_cc_gm">
-                                <img src="./assets/icons/mail.svg" alt="" srcset="">
+                                <img src="/assets/icons/mail.svg" alt="" srcset="">
                                 ${currentUser.email}
                             </p>
                             <p class="d_flex_cc_gm">
-                                <img src="./assets/icons/call.svg" alt="" srcset="">
+                                <img src="/assets/icons/call.svg" alt="" srcset="">
                                 ${currentUser.tel}
                             </p>
                             <hr>
                             <p class="d_flex_cc_gm">
-                                <img src="./assets/icons/location_on.svg" alt="" srcset="">
+                                <img src="/assets/icons/location_on.svg" alt="" srcset="">
                                 Standort: ${currentUser.location}
                             </p>
                             <p class="d_flex_cc_gm">
-                                <img src="./assets/icons/person.svg" alt="" srcset="">
+                                <img src="/assets/icons/person.svg" alt="" srcset="">
                                 Mitglied seit ${formatToMonthYearAndDay(
                                   currentUser.created_at,
                                 )}
                             </p>
                             <hr>
                             <p class="d_flex_cc_gm">
-                                <img src="./assets/icons/schedule.svg" alt="" srcset="">
+                                <img src="/assets/icons/schedule.svg" alt="" srcset="">
                                 Verfügbarkeit: ${currentUser.working_hours}
                             </p>
                         </div>
@@ -322,7 +322,7 @@ function getBusinessDialogFormTemplate() {
                     <form onsubmit="businessEditOnsubmit(event)" class="d_flex_cc_gm f_d_c w_full pos_rel">
                         <button type="button" onclick="abboardBusinessEdit()"
                             class="d_flex_cc_gl btn_round_l btn_edit abs_pos_edit_btn_m">
-                            <img src="./assets/icons/close_black.svg" alt="">
+                            <img src="/assets/icons/close_black.svg" alt="">
                         </button>
                         <h2 class="font_prime_color p_top_s">Profil editieren</h2>
                         <div class="image_input_box">
@@ -331,7 +331,7 @@ function getBusinessDialogFormTemplate() {
                             )}" alt="Aktuelles Profilbild">
                             <div onclick="clickFileInput('business_profile_img_input')"
                                 class="file_input d_flex_cc_gl btn_round_m btn_edit btn_border_secondary">
-                                <img src="./assets/icons/photo_camera.svg" alt="" srcset="">
+                                <img src="/assets/icons/photo_camera.svg" alt="" srcset="">
                                 <input onchange="changeCurrentFiles(this)" type="file" id="business_profile_img_input"
                                     accept="image/*">
                             </div>
