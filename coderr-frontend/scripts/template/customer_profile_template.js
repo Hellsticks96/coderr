@@ -30,11 +30,11 @@ function getCustomerDetailTemplate() {
 
                 <div class="d_flex_cs_gm f_d_c w_full">
                     <p class="d_flex_cc_gm">
-                        <img src="./assets/icons/mail.svg" alt="" srcset="">
+                        <img src="/assets/icons/mail.svg" alt="" srcset="">
                         ${currentCustomerUser.email}
                     </p>
                     <p class="d_flex_cc_gm">
-                        <img src="./assets/icons/person.svg" alt="" srcset="">
+                        <img src="/assets/icons/person.svg" alt="" srcset="">
                         Mitglied seit ${formatToMonthYearAndDay(
                           currentCustomerUser.created_at,
                         )}
