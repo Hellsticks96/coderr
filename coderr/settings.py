@@ -134,6 +134,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 WHITENOISE_ROOT = BASE_DIR / "coderr-frontend"
+WHITENOISE_INDEX_FILE = True
 
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": config("CLOUDINARY_CLOUD_NAME", default=""),
