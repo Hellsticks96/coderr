@@ -65,7 +65,7 @@ async function initBProfile() {
   let response = await setCurrentUser();
   setHeader();
   if (!response.ok) {
-    window.location.href = "./login.html";
+    window.location.href = "/login/";
   } else {
     await loadBusinessUser();
     currentOfferBusinessProfileFilter.creator_id = currentBusinessUser.user;
@@ -111,14 +111,14 @@ async function loadBusinessUser() {
   const urlParams = new URLSearchParams(window.location.search);
   const profileId = urlParams.get("id");
   if (!profileId) {
-    window.location.href = "index.html";
+    window.location.href = "/";
   } else {
     let resp = await getData(PROFILE_URL + profileId + "/");
     if (resp.ok) {
       if (resp.data.type == "business") {
         currentBusinessUser = resp.data;
       } else {
-        window.location.href = `customer_profile.html?id=${resp.data.user}`;
+        window.location.href = `/customer-profile/?id=${resp.data.user}`;
       }
     } else {
       extractErrorMessages(resp.data);

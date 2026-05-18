@@ -1,6 +1,6 @@
 function logOut() {
   removeAuthCredentials();
-  window.location.href = "./index.html";
+  window.location.href = "/";
 }
 
 async function logIn(formData) {
@@ -13,7 +13,7 @@ async function logIn(formData) {
       response.data.user_id,
       response.data.username,
     );
-    window.location.href = "./offer_list.html";
+    window.location.href = "/offers/";
   }
 }
 
@@ -28,6 +28,6 @@ async function registration(data) {
       response.data.user_id,
       response.data.username,
     );
-    window.location.href = "./offer_list.html";
+    window.location.href = "/offers/";
   }
 }
