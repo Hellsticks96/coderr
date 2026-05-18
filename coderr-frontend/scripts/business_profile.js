@@ -92,7 +92,7 @@ async function loadRenderBusinessBaseInfo() {
       resp.data.completed_order_count;
   }
   document.getElementById("business_profile_avg_rating").innerHTML =
-    `${meanValueReviews()}<img src="./assets/icons/kid_star.svg" alt="" srcset="">`;
+    `${meanValueReviews()}<img src="/assets/icons/kid_star.svg" alt="" srcset="">`;
   document.getElementById("business_profile_review_count").innerText =
     currentReviews.length;
   document.getElementById("business_profile_offer_count").innerText =
