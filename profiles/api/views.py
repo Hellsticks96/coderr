@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import generics, permissions
 
 from coderr.permissions import IsOwner
@@ -7,6 +8,7 @@ from .serializers import UserProfileSerializer
 
 
 # Get all Profiles
+@extend_schema(tags=["profiles"])
 class ProfileView(generics.RetrieveUpdateAPIView):
     """
     Retrieve or update the authenticated user's profile.

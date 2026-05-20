@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import generics, permissions, status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -9,26 +10,33 @@ from coderr.permissions import IsOwner
 from user_auth_app.models import User
 
 from .serializers import (
+    AuthResponseSerializer,
+    CustomAuthTokenSerializer,
     RegistrationSerializer,
-    UserProfileSerializer,
+    UserSerializer,
 )
 
 
 class UserProfileList(generics.ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UserProfileSerializer
+    serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
 class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
-    serializer_class = UserProfileSerializer
+    serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwner]
 
 
 class RegistrationView(APIView):
     permission_classes = [AllowAny]
 
+    @extend_schema(
+        tags=["auth"],
+        request=RegistrationSerializer,
+        responses={201: AuthResponseSerializer},
+    )
     def post(self, request):
         """
         Registers a new user account.
@@ -54,6 +62,13 @@ class RegistrationView(APIView):
 
 
 class CustomLoginView(ObtainAuthToken):
+    serializer_class = CustomAuthTokenSerializer
+
+    @extend_schema(
+        tags=["auth"],
+        request=CustomAuthTokenSerializer,
+        responses={200: AuthResponseSerializer},
+    )
     def post(self, request, *args, **kwargs):
         """
         Authenticates a user using DRF token authentication.
