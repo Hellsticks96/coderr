@@ -13,7 +13,7 @@ django-filter==25.2
 djangorestframework==3.17.1
 drf-spectacular==0.29.0
 gunicorn==26.0.0
-idna==3.15
+idna==3.17
 inflection==0.5.1
 jsonschema==4.26.0
 jsonschema-specifications==2025.9.1
