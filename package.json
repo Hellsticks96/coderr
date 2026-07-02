@@ -4,6 +4,6 @@
     "prettier:check": "npx prettier --check coderr-frontend"
   },
   "dependencies": {
-    "prettier": "^3.8.3"
+    "prettier": "^3.9.4"
   }
 }
