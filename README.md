@@ -4,8 +4,8 @@ A freelance services marketplace. Business users create tiered service offers, c
 
 Built with Django REST Framework and a vanilla JS frontend, deployed on Railway with separate staging and production environments.
 
-**Live:** ([](https://coderr-production.up.railway.app/))  
-**API Docs (Swagger UI):** ([](https://coderr-production.up.railway.app/api/schema/swagger-ui/))
+**Live:** [Production Page](https://coderr-production.up.railway.app/)
+**API Docs (Swagger UI):** [Live Swagger UI](https://coderr-production.up.railway.app/api/schema/swagger-ui/)
 
 ---
 
