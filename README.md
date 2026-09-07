@@ -4,8 +4,8 @@ A freelance services marketplace. Business users create tiered service offers, c
 
 Built with Django REST Framework and a vanilla JS frontend, deployed on Railway with separate staging and production environments.
 
-**Live:** _link coming soon_  
-**API Docs (Swagger UI):** _link coming soon_
+**Live:** ([](https://coderr-production.up.railway.app/))  
+**API Docs (Swagger UI):** ([](https://coderr-production.up.railway.app/api/schema/swagger-ui/))
 
 ---
 
@@ -140,14 +140,14 @@ Railway runs `collectstatic` and `migrate` automatically on each deploy.
 
 ### Environment variables (Railway dashboard)
 
-| Variable | Description |
-|---|---|
-| `SECRET_KEY` | Django secret key |
-| `DEBUG` | `False` |
-| `ALLOWED_HOSTS` | Your Railway domain |
-| `DATABASE_URL` | Set automatically when a Postgres service is attached |
+| Variable                | Description                                           |
+| ----------------------- | ----------------------------------------------------- |
+| `SECRET_KEY`            | Django secret key                                     |
+| `DEBUG`                 | `False`                                               |
+| `ALLOWED_HOSTS`         | Your Railway domain                                   |
+| `DATABASE_URL`          | Set automatically when a Postgres service is attached |
 | `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name (optional — image uploads only) |
-| `CLOUDINARY_API_KEY` | Cloudinary API key (optional — image uploads only) |
+| `CLOUDINARY_API_KEY`    | Cloudinary API key (optional — image uploads only)    |
 | `CLOUDINARY_API_SECRET` | Cloudinary API secret (optional — image uploads only) |
 
 ### CI/CD
