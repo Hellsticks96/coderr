@@ -20,7 +20,7 @@ jsonschema-specifications==2025.9.1
 mypy_extensions==1.1.0
 packaging==26.3
 pathspec==1.1.1
-pillow==12.2.0
+pillow==12.3.0
 platformdirs==4.9.6
 psycopg2-binary==2.9.12
 python-decouple==3.8
